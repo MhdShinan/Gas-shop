@@ -1,0 +1,92 @@
+/*=========== TABLE OF CONTENTS ===========
+1. Text CSS
+2. Heading CSS
+3. Container CSS
+==========================================*/
+
+/*-------------------------------------
+  1. Text CSS
+--------------------------------------*/
+.ui.text.size-textxs {
+    font-size: 64px;
+    font-weight: 400;
+    font-style: normal;
+    @media only screen and (max-width: 1050px) {
+      font-size: 48px;
+    }
+  }
+  
+  .ui.text {
+    color: var(--black_900_01);
+    font-family: Kings;
+  }
+  
+  /*-------------------------------------
+    2. Heading CSS
+  --------------------------------------*/
+  .ui.heading.size-headingxs {
+    font-size: 14px;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .ui.heading.size-headings {
+    font-size: 18px;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .ui.heading.size-headingmd {
+    font-size: 20px;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .ui.heading.size-headinglg {
+    font-size: 30px;
+    font-weight: 700;
+    font-style: italic;
+    @media only screen and (max-width: 1050px) {
+      font-size: 28px;
+    }
+  
+    @media only screen and (max-width: 550px) {
+      font-size: 26px;
+    }
+  }
+  
+  .ui.heading.size-headingxl {
+    font-size: 48px;
+    font-weight: 700;
+    font-style: bold;
+    @media only screen and (max-width: 1050px) {
+      font-size: 44px;
+    }
+  
+    @media only screen and (max-width: 550px) {
+      font-size: 38px;
+    }
+  }
+  
+  .ui.heading {
+    color: var(--white_a700_01);
+    font-family: Inter;
+  }
+  
+  /*-------------------------------------
+    3. Container CSS
+  --------------------------------------*/
+  .container-xs {
+    max-width: 1074px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .container-sm {
+    max-width: 1076px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  

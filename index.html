@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Uwais&Sons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app" />
+    <img
+      alt="Logo"
+      src="https://appproject.dhiwise.com/dhiwise-logo.png?c=&v="
+      style="width: 0px; height: 0px; display: none"
+    />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/swiper@11.0.6/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <link rel="stylesheet" type="text/css" href="./css/font.css" />
+    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="./css/components.css" />
+    <link rel="stylesheet" type="text/css" href="./css/DesktopSixteen.css" />
+    <link rel="stylesheet" type="text/css" href="./css/Overlay.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.0.6/swiper-bundle.min.js" defer></script>
+    <script>
+      async function handleSlider() {
+        const slider = document.querySelector("#slider");
+
+        // Wait for all content to load before setting maxWidth
+        const imageList = slider.querySelectorAll("img");
+        const onLoadPromiseList = [];
+        for (const image of imageList) {
+          if (image.complete) continue;
+
+          const onLoadPromise = new Promise((resolve, reject) => {
+            if (image.complete) return resolve();
+            image.onload = resolve;
+            image.onerror = resolve;
+          });
+          onLoadPromiseList.push(onLoadPromise);
+        }
+        await Promise.all(onLoadPromiseList);
+
+        // Set max width and height to prevent slider from overflowing
+        slider.style.maxWidth = getComputedStyle(slider).width;
+        slider.style.maxHeight = getComputedStyle(slider).height;
+
+        const sliderParent = slider.parentElement;
+        const sliderTrack = document.querySelector("#slider > .swiper-wrapper");
+        const slides = document.querySelectorAll("#slider > .swiper-wrapper > .swiper-slide");
+
+        // Clone slides for infinite loop
+        const slidesToShow = 1;
+        const slidesRequired = 2;
+        for (let i = 0; slides.length <= slidesToShow && i <= slidesRequired - 1; i++) {
+          const index = i % slidesToShow;
+          const clone = slides[index]?.cloneNode(true);
+          clone?.setAttribute("cloned", "");
+          sliderTrack?.appendChild(clone);
+        }
+
+        const swiper = new Swiper("#slider", {
+          grabCursor: true,
+          loop: true,
+          slidesOffsetAfter: 0,
+          slidesOffsetBefore: 0,
+          slidesPerView: 1,
+          navigation: {
+            prevEl: "#slider-control-prev",
+            nextEl: "#slider-control-next",
+          },
+          breakpoints: {
+            0: { slidesPerView: 1 },
+            551: { slidesPerView: 1 },
+            1051: { slidesPerView: 1 },
+          },
+        });
+      }
+
+      /**
+       * Hydrate slider #slider
+       */
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          await handleSlider();
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="desktop-sixteen">
+      <div class="columnarrowleft">
+        <header class="headeruwaissons">
+          <div class="header-container">
+              <!-- Left Section -->
+              <div class="logo-section">
+                  <img src="images/download (1).png" alt="Litro Gas" class="logo-image" />
+              </div>
+      
+              <!-- Navigation and Settings -->
+              <nav class="nav-section">
+                  <ul class="nav-links">
+                      <li><a href="#">Home</a></li>
+                      <li><a href="#">About us</a></li>
+                      <li><a href="#">Shop</a></li>
+                      <li><a href="#">Contact</a></li>
+                  </ul>
+              </nav>
+      
+              <!-- Right Section -->
+              <div class="login-section">
+                  <button class="login-button">
+                      <span class="menu-icon">⋮</span>
+                      <span>Login</span>
+                  </button>
+                  <div class="date-time">
+                    <p id="current-date"></p>
+                    <p id="current-time"></p>
+                </div>                
+              </div>
+          </div>
+      </header>
+      
+        <div class="row_two">
+          <div class="rowarrowleft">
+            <div id="slider" class="slider swiper">
+              <div class="swiper-wrapper">
+                  <div class="swiper-slide"><img src="images/COVER 3.jpeg" alt="Cover One" class="slider-image" /></div>
+                  <div class="swiper-slide"><img src="images/COVER.jpeg" alt="Cover Two" class="slider-image"/></div>
+                  <div class="swiper-slide"><img src="images/COVER IMAGE.jpeg" alt="Cover Three" class="slider-image"/></div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column container-xs">
+          <div class="columnwhychoose">
+            <div class="rowwhychooseus">
+              <h1 class="whychooseus ui heading size-headinglg">Why Choose Us ?</h1>
+            </div>
+            <div class="list">
+              <div class="stack">
+                <img src="images/images (1).jpeg" alt="Image" class="image-1" />
+              </div>
+              <div class="stack">
+                <img src="images/download (3).png" alt="Image" class="image-1" />
+              </div>
+              <div class="stack">
+                <img src="images/download (2).png" alt="Image" class="image-1" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row_three">
+        <div class="rowsmall container-xs">
+          <div class="cardrotate">
+            <div class="card-inner">
+              <div class="card-front">
+                <h2 class="card-title">Small</h2>
+                <img src="images/SMALL.jpeg" alt="Card Image" class="card-image">
+              </div>
+              <div class="card-back">
+                <h2 class="card-title">SMALL</h2><br><br>
+                <div class="center-text-container">
+                  <p class="center.text">SIZE<br><br>PRIZE<br><br>STOCK</p>
+                </div>
+                <br>
+                <button class="btn-order" id="order-now-new-btn" style="margin-top: 20px; background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+                  Order
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- New Blue Overlay -->
+          <div class="overlay" id="new-overlay" style="display: none;">
+            <div class="new-overlay-content">
+              <h2>Details Where to place the order</h2>
+              <form class="form-box-unique" action="/send-message" method="POST">
+                <div class="responsive-container-block">
+                  <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
+                    <input class="input-3d" name="FirstName" placeholder="First Name">
+                  </div>
+                  <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                    <input class="input-3d" name="PhoneNumber" placeholder="Phone Number">
+                  </div>
+                  <div class="buttons-container">
+                    <button class="btn-cancel" id="close-new-overlay">Cancel</button>
+                    <button class="btn-order" id="order-now-btn">Order</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="cardrotate">
+            <div class="card-inner">
+              <div class="card-front">
+                <h2 class="card-title">MEDIUM</h2>
+                <img src="images/MEDIUM.jpeg" alt="Card Image" class="card-image">
+              </div>
+              <div class="card-back">
+                <h2 class="card-title">MEDIUM</h2><br><br>
+                <div class="center-text-container">
+                  <p class="center.text">SIZE<br><br>PRIZE<br><br>STOCK</p>
+                </div>
+                <br>
+                <button class="btn-order" id="order-now-new-btn" style="margin-top: 20px; background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+                  Order
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- New Blue Overlay -->
+          <div class="overlay" id="new-overlay" style="display: none;">
+            <div class="new-overlay-content">
+              <h2>Details Where to place the order</h2>
+              <form class="form-box-unique" action="/send-message" method="POST">
+                <div class="responsive-container-block">
+                  <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
+                    <input class="input-3d" name="FirstName" placeholder="First Name">
+                  </div>
+                  <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                    <input class="input-3d" name="PhoneNumber" placeholder="Phone Number">
+                  </div>
+                  <div class="buttons-container">
+                    <button class="btn-cancel" id="close-new-overlay">Cancel</button>
+                    <button class="btn-order" id="order-now-btn">Order</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="cardrotate">
+            <div class="card-inner">
+              <div class="card-front">
+                <h2 class="card-title">LARGE</h2>
+                <img src="images/BIG.jpeg" alt="Card Image" class="card-image">
+              </div>
+              <div class="card-back">
+                <h2 class="card-title">LARGE</h2><br><br>
+                <div class="center-text-container">
+                  <p class="center.text">SIZE<br><br>PRIZE<br><br>STOCK</p>
+                </div>
+                <br>
+                <button class="btn-order" id="order-now-new-btn" style="margin-top: 20px; background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+                  Order
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- New Blue Overlay -->
+          <div class="overlay" id="new-overlay" style="display: none;">
+            <div class="new-overlay-content">
+              <h2>Details Where to place the order</h2>
+              <form class="form-box-unique" action="/send-message" method="POST">
+                <div class="responsive-container-block">
+                  <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
+                    <input class="input-3d" name="FirstName" placeholder="First Name">
+                  </div>
+                  <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                    <input class="input-3d" name="PhoneNumber" placeholder="Phone Number">
+                  </div>
+                  <div class="buttons-container">
+                    <button class="btn-cancel" id="close-new-overlay">Cancel</button>
+                    <button class="btn-order" id="order-now-btn">Order</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="cardrotate">
+            <div class="card-inner">
+              <div class="card-front">
+                <h2 class="card-title">EX-LARGE</h2>
+                <img src="images/WhatsApp Image 2024-09-21 at 22.35.07_9166b00b.jpg" alt="Card Image" class="card-image">
+              </div>
+              <div class="card-back">
+                <h2 class="card-title">EX-LARGE</h2><br><br>
+                <div class="center-text-container">
+                  <p class="center.text">SIZE : 20.5 Kg<br><br>PRIZE : <!-- Admin Panel--><br><br>STOCK : <!-- Admin Panel--></p>
+                </div>
+                <br>
+                <button class="btn-order" id="order-now-new-btn" style="margin-top: 20px; background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+                  Order
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- New Blue Overlay -->
+          <div class="overlay" id="new-overlay" style="display: none;">
+            <div class="new-overlay-content">
+              <h2>Details Where to place the order</h2>
+              <form class="form-box-unique" action="/send-message" method="POST">
+                <div class="responsive-container-block">
+                  <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
+                    <input class="input-3d" name="FirstName" placeholder="First Name">
+                  </div>
+                  <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                    <input class="input-3d" name="PhoneNumber" placeholder="Phone Number">
+                  </div>
+                  <div class="buttons-container">
+                    <button class="btn-cancel" id="close-new-overlay">Cancel</button>
+                    <button class="btn-order" id="order-now-btn">Order</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+                
+          </div>
+        </div>
+      </div>
+      <div class="row_four">
+        <div class="rowregulators">
+          <div class="listregulators">
+            <div class="cardrotate">
+              <div class="card-inner">
+                <div class="card-front">
+                  <h2 class="card-title">Regulators</h2>
+                  <img src="images/download.jpeg" alt="Card Image" class="card-image">
+                </div>
+                <div class="card-back">
+                  <h2 class="card-title">Regulators</h2><br><br>
+                  <div class="center-text-container">
+                    <p class="center.text">Contact below number<br> or visit the location</p>
+                  </div>
+                  <br><br>
+                  <a href="tel:+94766187001">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z"/>
+                    </svg>
+                  </a>
+                  
+                    <br><br>                  
+                    <a href="https://maps.app.goo.gl/uj9sNdrKLxgf9W3DA" target="_blank" rel="noopener noreferrer">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
+                   </svg>
+                    </a>
+                </div>
+              </div>
+            </div>
+            <div class="cardrotate">
+              <div class="card-inner">
+                <div class="card-front">
+                  <h2 class="card-title">Hose</h2>
+                  <img src="images/download (1).jpeg" alt="Card Image" class="card-image">
+                </div>
+                <div class="card-back">
+                  <h2 class="card-title">hose</h2><br><br>
+                  <div class="center-text-container">
+                    <p class="center.text">Contact below number<br> or visit the location</p>
+                  </div>
+                  <br><br>
+                  <a href="tel:+94766187001">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z"/>
+                    </svg>
+                  </a>
+                  
+                    <br><br>                  
+                    <a href="https://maps.app.goo.gl/uj9sNdrKLxgf9W3DA" target="_blank" rel="noopener noreferrer">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
+                   </svg>
+                    </a>
+                </div>
+              </div>
+            </div>
+            <div class="cardrotate">
+              <div class="card-inner">
+                <div class="card-front"><br><br><br><br>
+                  <h2 class="card-title">Burners</h2>
+                  <img src="images/download (4).jpeg" alt="Card Image" class="card-image">
+                </div>
+                <div class="card-back">
+                  <h2 class="card-title">Burners</h2><br><br>
+                  <div class="center-text-container">
+                    <p class="center.text">Contact below number<br> or visit the location</p>
+                  </div>
+                  <br><br>
+                  <a href="tel:+94766187001">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z"/>
+                    </svg>
+                  </a>
+                  
+                    <br><br>                  
+                    <a href="https://maps.app.goo.gl/uj9sNdrKLxgf9W3DA" target="_blank" rel="noopener noreferrer">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
+                   </svg>
+                    </a>
+                </div>
+              </div>
+            </div>
+            <div class="cardrotate">
+              <div class="card-inner">
+                <div class="card-front">
+                  <h2 class="card-title">Pan Support</h2>
+                  <img src="images/download (3).jpeg" alt="Card Image" class="card-image">
+                </div>
+                <div class="card-back">
+                  <h2 class="card-title">Pan Support</h2><br><br>
+                  <div class="center-text-container">
+                    <p class="center.text">Contact below number<br> or visit the location</p>
+                  </div>
+                  <br><br>
+                  <a href="tel:+94766187001">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z"/>
+                    </svg>
+                  </a>
+                  
+                    <br><br>                  
+                    <a href="https://maps.app.goo.gl/uj9sNdrKLxgf9W3DA" target="_blank" rel="noopener noreferrer">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
+                   </svg>
+                    </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rowview">
+        <div class="column_one container-sm">
+          <div class="columnview">
+            <div class="background">
+              <div class="container">
+                <div class="screen">
+                  <div class="screen-header">
+                    <div class="screen-header-left">
+                      <div class="screen-header-button close"></div>
+                      <div class="screen-header-button maximize"></div>
+                      <div class="screen-header-button minimize"></div>
+                    </div>
+                    <div class="screen-header-right">
+                      <div class="screen-header-ellipsis"></div>
+                      <div class="screen-header-ellipsis"></div>
+                      <div class="screen-header-ellipsis"></div>
+                    </div>
+                  </div>
+                  <div class="map-container">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d134.1808475159733!2d80.6718386!3d7.3310465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae367640788e75f%3A0x17ed01dc40928f7e!2sUwais%20%26%20Sons..(gas%20Shop)!5e0!3m2!1sen!2sin!4v1690268771181!5m2!1sen!2sin"
+                      width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+                      tabindex="0"></iframe>
+                  </div>
+                  <div class="landing_page">
+                    <div class="responsive-container-block big-container">
+                      <img class="bg-img" id="iq5bf" src="images/COVER IMAGE.jpeg">
+                      <div class="responsive-container-block container">
+                        <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12 left-one">
+                          <div class="content-box">
+                            <p class="text-blk section-head">
+                              Contact us : 
+                            </p>
+                            <div class="icons-container">
+                              <a class="share-icon">
+                                <img class="img" src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-twitter.png">
+                              </a>
+                              <a class="share-icon">
+                                <img class="img" src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-facebook.png">
+                              </a>
+                              <a class="share-icon">
+                                <img class="img" src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-google.png">
+                              </a>
+                              <a class="share-icon">
+                                <img class="img" src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-instagram.png">
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="responsive-cell-block wk-ipadp-6 wk-tab-12 wk-mobile-12 wk-desk-6 right-one" id="i1zj">
+                          <form class="form-box">
+                            <div class="container-block form-wrapper">
+                      
+                              <div class="responsive-container-block">
+                                <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="i10mt-7">
+                                  <input class="input" id="ijowk-7" name="FirstName" placeholder="First Name">
+                                </div>  
+                                <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                                  <input class="input" id="imgis-6" name="PhoneNumber" placeholder="Phone Number">
+                                </div>
+                                <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="i634i-7">
+                                  <textarea aria-placeholder="Type message here" class="textinput" id="i5vyy-7" placeholder="Type message here"></textarea>
+                                </div>
+                              </div>
+                              <button class="submit-btn">
+                                submit
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row_six">
+        <div class="row_five container-sm">
+          <div class="rowfooter">
+            <h2 class="footer ui heading size-headingxl"><button class="button type1">
+              <span>&copy; All rights reserved.</span>
+            </button></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+  
+</html>
