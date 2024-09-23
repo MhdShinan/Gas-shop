@@ -1,33 +1,31 @@
+// Get references to the order buttons and the overlay elements
+const orderButtons = document.querySelectorAll('.btn-order');
+const overlay = document.getElementById('new-overlay');
+const overlayText = document.querySelector('.new-overlay-content p');
+const closeOverlayButton = document.getElementById('close-new-overlay');
 
-// Elements
-const clickableDiv = document.getElementById('clickable-div');
-const originalOverlay = document.getElementById('original-overlay');
-const closeOverlayBtn = document.getElementById('close-overlay');
-const orderNowNewBtn = document.getElementById('order-now-new-btn');
-const newOverlay = document.getElementById('new-overlay');
-const closeNewOverlayBtn = document.getElementById('close-new-overlay');
-
-// Show the original overlay when clickable-div is clicked
-clickableDiv.addEventListener('click', () => {
-  originalOverlay.style.display = 'block';
+// Function to open the overlay with the corresponding size
+orderButtons.forEach(button => {
+  button.addEventListener('click', (event) => {
+    const cardTitle = event.target.closest('.card-inner').querySelector('.card-title').textContent;
+    overlayText.innerHTML = `<p>${cardTitle}</p><!--{SIZE}-->`; // Set the size in the overlay
+    overlay.style.display = 'block'; // Show the overlay
+  });
 });
 
-// Close the original overlay and open the new overlay when Order button is clicked
-orderNowNewBtn.addEventListener('click', () => {
-  originalOverlay.style.display = 'none';
-  newOverlay.style.display = 'block';
+// Close the overlay when the cancel button is clicked
+closeOverlayButton.addEventListener('click', (event) => {
+  event.preventDefault(); // Prevent default button behavior
+  overlay.style.display = 'none'; // Hide the overlay
 });
 
-// Close the new overlay when Cancel is clicked
-closeNewOverlayBtn.addEventListener('click', (e) => {
-  e.preventDefault(); // Prevent form submission if it's a button within a form
-  newOverlay.style.display = 'none';
+// Optional: Close the overlay when clicking outside of it
+window.addEventListener('click', (event) => {
+  if (event.target === overlay) {
+    overlay.style.display = 'none'; // Hide the overlay
+  }
 });
 
-// Close the original overlay when the close button is clicked
-closeOverlayBtn.addEventListener('click', () => {
-  originalOverlay.style.display = 'none';
-});
 
 
 function updateDateTime() {

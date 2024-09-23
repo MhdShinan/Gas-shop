@@ -4,6 +4,10 @@
 
 ==========================================*/
 /* Common Overlay styles */
+.invisible {
+  visibility: hidden;
+}
+
 
 /* New Overlay Style */
 #new-overlay {
@@ -78,8 +82,21 @@
   background-color: #27ae60;
   transform: scale(1.05);
 }
+/* Overlay styling */
+.overlay {
+  position: fixed; /* Make sure the overlay covers the entire screen */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure the overlay is on top */
+}
 
-/* Network effect (optional if you want to make it fancy) */
+/* Network effect (optional) */
 .new-overlay-content::before {
   content: "";
   position: absolute;
@@ -87,37 +104,25 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background:#007bff;
+  background: #007bff;
   opacity: 0.2;
-  z-index: -1;
+  z-index: -1; /* Keep this behind the overlay content */
   border-radius: 15px;
   animation: networkGlow 5s infinite alternate;
 }
 
-/* Animation for the glow effect */
-@keyframes networkGlow {
-  from {
-    opacity: 0.1;
-  }
-  to {
-    opacity: 0.3;
-  }
-}
-
-/* Button hover effect */
-button:hover {
-  transition: all 0.2s ease-in-out;
-}
-
+/* The rest of your previous CSS */
 .new-overlay-content {
   padding: 20px;
   color: white;
   background-color: #007bff;
   text-align: center;
-  border-radius: 10PX;
+  border-radius: 10px;
+  position: relative; /* Ensure content is above the ::before pseudo-element */
+  z-index: 1001; /* Ensure content is above the semi-transparent background */
 }
 
-/* Button Style */
+/* Other styles */
 button.flex-row-center-center {
   cursor: pointer;
   padding: 10px;
@@ -127,13 +132,11 @@ button.flex-row-center-center {
   border-radius: 5px;
 }
 
-/* Hover Effect for Order Now button */
 button.flex-row-center-center:hover {
   background-color: lightblue;
   color: white;
 }
 
-/* Close Button Style */
 #close-overlay, #close-new-overlay {
   cursor: pointer;
   margin-top: 10px;
