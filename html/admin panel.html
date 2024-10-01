@@ -12,13 +12,79 @@
       style="width: 0px; height: 0px; display: none"
     />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/swiper@11.0.6/swiper.min.css" />
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />
-    <link rel="stylesheet" type="text/css" href="./css/font.css" />
-    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
-    <link rel="stylesheet" type="text/css" href="./css/components.css" />
-    <link rel="stylesheet" type="text/css" href="./css/DesktopSixteen.css" />
-    <link rel="stylesheet" type="text/css" href="./css/Overlay.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/index.css" />
+    <link rel="stylesheet" type="text/css" href="../css/font.css" />
+    <link rel="stylesheet" type="text/css" href="../css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../css/components.css" />
+    <link rel="stylesheet" type="text/css" href="../css/DesktopSixteen.css" />
+    <link rel="stylesheet" type="text/css" href="../css/Overlay.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.0.6/swiper-bundle.min.js" defer></script>
+    <script>
+      async function handleSlider() {
+        const slider = document.querySelector("#slider");
+
+        // Wait for all content to load before setting maxWidth
+        const imageList = slider.querySelectorAll("img");
+        const onLoadPromiseList = [];
+        for (const image of imageList) {
+          if (image.complete) continue;
+
+          const onLoadPromise = new Promise((resolve, reject) => {
+            if (image.complete) return resolve();
+            image.onload = resolve;
+            image.onerror = resolve;
+          });
+          onLoadPromiseList.push(onLoadPromise);
+        }
+        await Promise.all(onLoadPromiseList);
+
+        // Set max width and height to prevent slider from overflowing
+        slider.style.maxWidth = getComputedStyle(slider).width;
+        slider.style.maxHeight = getComputedStyle(slider).height;
+
+        const sliderParent = slider.parentElement;
+        const sliderTrack = document.querySelector("#slider > .swiper-wrapper");
+        const slides = document.querySelectorAll("#slider > .swiper-wrapper > .swiper-slide");
+
+        // Clone slides for infinite loop
+        const slidesToShow = 1;
+        const slidesRequired = 2;
+        for (let i = 0; slides.length <= slidesToShow && i <= slidesRequired - 1; i++) {
+          const index = i % slidesToShow;
+          const clone = slides[index]?.cloneNode(true);
+          clone?.setAttribute("cloned", "");
+          sliderTrack?.appendChild(clone);
+        }
+
+        const swiper = new Swiper("#slider", {
+          grabCursor: true,
+          loop: true,
+          slidesOffsetAfter: 0,
+          slidesOffsetBefore: 0,
+          slidesPerView: 1,
+          navigation: {
+            prevEl: "#slider-control-prev",
+            nextEl: "#slider-control-next",
+          },
+          breakpoints: {
+            0: { slidesPerView: 1 },
+            551: { slidesPerView: 1 },
+            1051: { slidesPerView: 1 },
+          },
+        });
+      }
+
+      /**
+       * Hydrate slider #slider
+       */
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          await handleSlider();
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    </script>
   </head>
   <body>
     <div class="desktop-sixteen">
@@ -27,9 +93,7 @@
           <div class="custom-header-top">
           
               <img src="images/download (1).png" alt="Litro Gas Logo" class="custom-logo">
-             
               <img src="images/1.png" alt="Uwais & Sons Logo" class="custom-brand-logo">
-              <img src="images/mk.jpg" alt="Litro Gas Logo" class="custom-logo">
               <div class="custom-right-container">
                 <a href="html/login.html" id="loginButton" class="custom-login-btn">Login</a>
                 <div class="custom-date-time">
@@ -47,8 +111,8 @@
                   <li><a href="#">Contact</a></li>
               </ul>
           </nav>
-        </header>
-      <br><br><br><br><br><br><br><br><br><br><br>
+      </header>
+      
         <div class="row_two">
           <div class="rowarrowleft">
             <div id="slider" class="slider swiper">
@@ -57,7 +121,7 @@
                   <div class="swiper-slide"><img src="images/COVER.jpeg" alt="Cover Two" class="slider-image"/></div>
                   <div class="swiper-slide"><img src="images/COVER IMAGE.jpeg" alt="Cover Three" class="slider-image"/></div>
               </div>
-            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -81,7 +145,6 @@
           </div>
         </div>
       </div>
-     
       <div class="row_three">
         <div class="rowsmall container-xs">
           <div class="cardrotate">
@@ -395,7 +458,7 @@
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="../js/script.js"></script>
   </body>
   
 </html>

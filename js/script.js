@@ -28,50 +28,51 @@ window.addEventListener('click', (event) => {
 
 
 
+
+// Function to update date and time
 function updateDateTime() {
-    const dateElement = document.getElementById('current-date');
-    const timeElement = document.getElementById('current-time');
-    
-    const now = new Date();
-    
-    // Format the date as DD/MM/YYYY
-    const date = now.toLocaleDateString('en-GB');
-    
-    // Format the time as HH:MM AM/PM
-    const time = now.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-    });
-    
-    dateElement.textContent = date;
-    timeElement.textContent = time;
+  const now = new Date();
+
+  // Format date as DD/MM/YYYY
+  const date = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+
+  // Format time as HH:MM AM/PM
+  const time = now.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+  });
+
+  // Update the HTML content
+  document.getElementById('currentDate').textContent = date;
+  document.getElementById('currentTime').textContent = time;
 }
 
-// Update the time every second
+// Update the date and time immediately and every second
 setInterval(updateDateTime, 1000);
+updateDateTime(); // Initial call to set the time immediately
 
-// Initial call to display the time immediately
-updateDateTime();
 
-const swiper = new Swiper('.swiper', {
+document.addEventListener("DOMContentLoaded", function () {
+  // Initialize Swiper
+  const swiper = new Swiper('.swiper', {
+    direction: 'horizontal',
+    loop: true,
     autoplay: {
-        delay: 1000, // Delay in milliseconds
-        disableOnInteraction: false, // Autoplay continues after user interactions
-    },
-    loop: true, // Loop the slides
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
+      delay: 1000, // Change slide every 3 seconds
+      disableOnInteraction: false, // Continue autoplay after interaction
     },
     navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
     },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
 });
-
-
-
 
   
   

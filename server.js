@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
+app.use('/html', express.static(path.join(__dirname, 'html')));
 
 // Serve index.html on the root route
 app.get('/', (req, res) => {

@@ -3,7 +3,87 @@
 2. Page CSS
 
 ==========================================*/
+
+
 /* Common Overlay styles */
+
+.custom-header {
+  background-color: #1e00ff;
+  padding: 15px 30px;
+  width: 85%; /* Increase width to match lower dark blue section */
+  max-width: 1400px;
+  margin: 0 auto;
+  border-radius: 10px; /* Added border-radius */
+  position: fixed;
+  z-index: 1000;
+  
+}
+
+.custom-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-logo {
+  width: 10%; /* Enlarged size of the Litro Gas logo */
+  height: auto;
+  border-radius: 10px;
+}
+
+.custom-brand-logo {
+  width: 450px;
+  height: auto; /* Adjust the size of the Uwais & Sons image */
+  border-radius: 20px;
+}
+
+.custom-right-container {
+  text-align: right;
+}
+
+.custom-login-btn {
+  background-color: #D3D3D3;
+  color: black;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.custom-date-time {
+  color: #D3D3D3;
+  font-size: 16px;
+}
+
+.custom-nav-bar {
+  margin-top: 15px;
+  background-color: #0057E7;
+  text-align: center;
+}
+
+.custom-nav-links {
+  list-style: none;
+  padding: 12px 0;
+}
+
+.custom-nav-links li {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+.custom-nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.custom-nav-links a:hover {
+  text-decoration: underline;
+}
+
+
 .invisible {
   visibility: hidden;
 }
