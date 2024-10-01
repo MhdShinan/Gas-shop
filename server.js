@@ -2,9 +2,11 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const mongoose = require('mongoose'); // Add mongoose
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 
 // Middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,7 +22,17 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Route to handle form submission
+// Define the Product Schema (for storing stock and price)
+const productSchema = new mongoose.Schema({
+    size: String,
+    price: Number,
+    stock: Number
+});
+
+// Create a Product model from the schema
+const Product = mongoose.model('Product', productSchema);
+
+// Route to handle form submission (Telegram message sending)
 app.post('/send-message', async (req, res) => {
     const { FirstName, PhoneNumber } = req.body;
 
