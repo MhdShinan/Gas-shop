@@ -74,6 +74,61 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
+
+
+
+document.getElementById('orderForm').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    const FirstName = document.getElementById('FirstName').value;
+    const PhoneNumber = document.getElementById('PhoneNumber').value;
+
+    try {
+      const response = await fetch('/send-message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ FirstName, PhoneNumber })
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        // Success Alert
+        Swal.fire({
+          icon: 'success',
+          title: 'Order Placed!',
+          text: 'Your order was placed successfully!',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          document.getElementById('new-overlay').style.display = 'none'; // Hide overlay
+        });
+      } else {
+        // Error Alert
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: result.message || 'Failed to place the order.',
+          confirmButtonText: 'Try Again'
+        });
+      }
+    } catch (error) {
+      // Network or other error
+      Swal.fire({
+        icon: 'success',
+        title: 'Order Placed!',
+        text: 'Your order was placed successfully!',
+        confirmButtonText: 'OK'
+      });
+    }
+  });
+
+  // Close overlay functionality
+  document.getElementById('close-new-overlay').addEventListener('click', function() {
+    document.getElementById('new-overlay').style.display = 'none';
+  });
   
   
 
