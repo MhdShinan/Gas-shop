@@ -59,44 +59,37 @@ const orderSchema = new mongoose.Schema({
 
 const Order = mongoose.model('Order', orderSchema);
 
-// Product model
-const productSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    size: { type: String, required: true },
-    price: { type: Number, required: true },
-    stock: { type: String, required: true }, // e.g., "5/10"
-});
-
-const Product = mongoose.model('Product', productSchema);
-
-// Function to save default products
-const saveDefaultProducts = async () => {
-    const defaultProducts = [
-        { name: 'Small', size: '5', price: 780, stock: '5/10' },
-        { name: 'Medium', size: '10', price: 1200, stock: '7/10' },
-        { name: 'Large', size: '15', price: 1500, stock: '3/10' },
-        { name: 'Ex-Large', size: '20', price: 2000, stock: '2/10' },
-    ];
+// Route to add or update a product
+app.post('/api/products', async (req, res) => {
+    const { size, price, quantity } = req.body;
 
     try {
-        await Product.insertMany(defaultProducts);
-        console.log('Default products saved to the database.');
-    } catch (error) {
-        console.error('Error saving default products:', error);
-    }
-};
+        // Find an existing product by size
+        const existingProduct = await Product.findOne({ size });
 
-// Fetch products
-// Route to get all products
-app.get('/products', async (req, res) => {
-    try {
-        const products = await Product.find(); // Fetch all products
-        res.json(products); // Return products as JSON
+        if (existingProduct) {
+            // If the product exists, update only the fields that are provided
+            if (price) {
+                existingProduct.price = price; // Update price if provided
+            }
+            if (quantity) {
+                existingProduct.quantity = quantity; // Update quantity if provided
+            }
+
+            await existingProduct.save(); // Save changes
+            return res.status(200).json({ success: true, message: 'Product updated successfully!' });
+        } else {
+            // If no product exists, create a new one
+            const newProduct = new Product({ size, price, quantity });
+            await newProduct.save();
+            return res.status(200).json({ success: true, message: 'Product added successfully!' });
+        }
     } catch (error) {
-        console.error('Error fetching products:', error);
-        res.status(500).send('Error fetching products.');
+        console.error('Error adding/updating product:', error);
+        return res.status(500).json({ success: false, message: 'Failed to add/update product.' });
     }
 });
+
 // Route to get user details by phone number
 app.get('/api/get-user/:phoneNumber', async (req, res) => {
     const { phoneNumber } = req.params;
