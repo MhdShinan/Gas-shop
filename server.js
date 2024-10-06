@@ -41,6 +41,59 @@ const connectDB = async () => {
 // Call the connectDB function to establish the connection
 connectDB();
 
+// Define the Product model
+const productSchema = new mongoose.Schema({
+    size: {
+        type: String,
+        enum: ['small', 'medium', 'large', 'extra-large'],
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true
+    }
+});
+
+const Product = mongoose.model('Product', productSchema);
+
+// Route to add or update a product
+app.post('/api/products', async (req, res) => {
+    const { size, price, quantity } = req.body;
+
+    try {
+        // Find a product with the same size
+        const existingProduct = await Product.findOne({ size });
+
+        if (existingProduct) {
+            // Update the price if provided
+            if (price) {
+                existingProduct.price = price;
+            }
+
+            // Update the quantity if provided
+            if (quantity) {
+                existingProduct.quantity = quantity;
+            }
+
+            // Save the updated product
+            await existingProduct.save();
+            return res.status(200).json({ success: true, message: 'Product updated successfully!' });
+        } else {
+            // If no existing product, create a new one
+            const newProduct = new Product({ size, price, quantity });
+            await newProduct.save();
+            return res.status(200).json({ success: true, message: 'Product added successfully!' });
+        }
+    } catch (error) {
+        console.error('Error adding/updating product:', error);
+        return res.status(500).json({ success: false, message: 'Failed to add/update product.' });
+    }
+});
+
 // Order model
 const orderSchema = new mongoose.Schema({
     FirstName: {
