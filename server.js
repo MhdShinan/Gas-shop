@@ -41,49 +41,45 @@ const connectDB = async () => {
 // Call the connectDB function to establish the connection
 connectDB();
 
-// Define the Product model
-const productSchema = new mongoose.Schema({
-    size: {
+// Order model
+const orderSchema = new mongoose.Schema({
+    FirstName: {
         type: String,
-        enum: ['small', 'medium', 'large', 'extra-large'],
-        required: true
+        required: true,
     },
-    price: {
-        type: Number,
-        required: true
+    PhoneNumber: {
+        type: String,
+        required: true,
     },
-    quantity: {
-        type: Number,
-        required: true
-    }
+    finalAddress: {
+        type: String,
+        required: true,
+    },
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Order = mongoose.model('Order', orderSchema);
 
 // Route to add or update a product
 app.post('/api/products', async (req, res) => {
     const { size, price, quantity } = req.body;
 
     try {
-        // Find a product with the same size
+        // Find an existing product by size
         const existingProduct = await Product.findOne({ size });
 
         if (existingProduct) {
-            // Update the price if provided
+            // If the product exists, update only the fields that are provided
             if (price) {
-                existingProduct.price = price;
+                existingProduct.price = price; // Update price if provided
             }
-
-            // Update the quantity if provided
             if (quantity) {
-                existingProduct.quantity = quantity;
+                existingProduct.quantity = quantity; // Update quantity if provided
             }
 
-            // Save the updated product
-            await existingProduct.save();
+            await existingProduct.save(); // Save changes
             return res.status(200).json({ success: true, message: 'Product updated successfully!' });
         } else {
-            // If no existing product, create a new one
+            // If no product exists, create a new one
             const newProduct = new Product({ size, price, quantity });
             await newProduct.save();
             return res.status(200).json({ success: true, message: 'Product added successfully!' });
@@ -94,6 +90,22 @@ app.post('/api/products', async (req, res) => {
     }
 });
 
+// Route to get user details by phone number
+app.get('/api/get-user/:phoneNumber', async (req, res) => {
+    const { phoneNumber } = req.params;
+
+    try {
+        const order = await Order.findOne({ PhoneNumber: phoneNumber }); // Assuming Order is your model
+        if (order) {
+            res.json(order); // Send the user details back as JSON
+        } else {
+            res.status(404).json(null); // User not found
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ message: 'Error fetching user details.' });
+    }
+});
 // Route to send message and save order
 app.post('/send-message', async (req, res) => {
     let { FirstName, PhoneNumber, Size, deliveryOption, deliveryMethod, finalAddress, addressOption } = req.body;
@@ -168,6 +180,12 @@ const sendMessageToTelegram = async (message, inlineKeyboard = {}) => {
         ...inlineKeyboard // Spread the inline keyboard object into the request body
     });
 };
+
+
+
+
+
+
 
 // Start the server
 app.listen(PORT, () => {
