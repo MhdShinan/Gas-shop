@@ -41,78 +41,59 @@ const connectDB = async () => {
 // Call the connectDB function to establish the connection
 connectDB();
 
-// Order model
-const orderSchema = new mongoose.Schema({
-    FirstName: {
-        type: String,
-        required: true,
-    },
-    PhoneNumber: {
-        type: String,
-        required: true,
-    },
-    finalAddress: {
-        type: String,
-        required: true,
-    },
-});
-
-const Order = mongoose.model('Order', orderSchema);
-
-// Product model
+// Define the Product model
 const productSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    size: { type: String, required: true },
-    price: { type: Number, required: true },
-    stock: { type: String, required: true }, // e.g., "5/10"
+    size: {
+        type: String,
+        enum: ['small', 'medium', 'large', 'extra-large'],
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true
+    }
 });
 
 const Product = mongoose.model('Product', productSchema);
 
-// Function to save default products
-const saveDefaultProducts = async () => {
-    const defaultProducts = [
-        { name: 'Small', size: '5', price: 780, stock: '5/10' },
-        { name: 'Medium', size: '10', price: 1200, stock: '7/10' },
-        { name: 'Large', size: '15', price: 1500, stock: '3/10' },
-        { name: 'Ex-Large', size: '20', price: 2000, stock: '2/10' },
-    ];
+// Route to add or update a product
+app.post('/api/products', async (req, res) => {
+    const { size, price, quantity } = req.body;
 
     try {
-        await Product.insertMany(defaultProducts);
-        console.log('Default products saved to the database.');
-    } catch (error) {
-        console.error('Error saving default products:', error);
-    }
-};
+        // Find a product with the same size
+        const existingProduct = await Product.findOne({ size });
 
-// Fetch products
-// Route to get all products
-app.get('/products', async (req, res) => {
-    try {
-        const products = await Product.find(); // Fetch all products
-        res.json(products); // Return products as JSON
-    } catch (error) {
-        console.error('Error fetching products:', error);
-        res.status(500).send('Error fetching products.');
-    }
-});
-// Route to get user details by phone number
-app.get('/api/get-user/:phoneNumber', async (req, res) => {
-    const { phoneNumber } = req.params;
+        if (existingProduct) {
+            // Update the price if provided
+            if (price) {
+                existingProduct.price = price;
+            }
 
-    try {
-        const order = await Order.findOne({ PhoneNumber: phoneNumber }); // Assuming Order is your model
-        if (order) {
-            res.json(order); // Send the user details back as JSON
+            // Update the quantity if provided
+            if (quantity) {
+                existingProduct.quantity = quantity;
+            }
+
+            // Save the updated product
+            await existingProduct.save();
+            return res.status(200).json({ success: true, message: 'Product updated successfully!' });
         } else {
-            res.status(404).json(null); // User not found
+            // If no existing product, create a new one
+            const newProduct = new Product({ size, price, quantity });
+            await newProduct.save();
+            return res.status(200).json({ success: true, message: 'Product added successfully!' });
         }
     } catch (error) {
-        console.error('Error fetching user:', error);
-        res.status(500).json({ message: 'Error fetching user details.' });
+        console.error('Error adding/updating product:', error);
+        return res.status(500).json({ success: false, message: 'Failed to add/update product.' });
     }
 });
+
 // Route to send message and save order
 app.post('/send-message', async (req, res) => {
     let { FirstName, PhoneNumber, Size, deliveryOption, deliveryMethod, finalAddress, addressOption } = req.body;
@@ -187,12 +168,6 @@ const sendMessageToTelegram = async (message, inlineKeyboard = {}) => {
         ...inlineKeyboard // Spread the inline keyboard object into the request body
     });
 };
-
-
-
-
-
-
 
 // Start the server
 app.listen(PORT, () => {
