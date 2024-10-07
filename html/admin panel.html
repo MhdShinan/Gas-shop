@@ -104,30 +104,88 @@
       .price-quantity-container input {
         width: 45%;
       }
+      @media (max-width: 768px) {
+    .form-container {
+      width: 80%;
+      padding: 20px;
+      transform: perspective(1000px) rotateX(5deg);
+    }
+
+    .price-quantity-container input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .price-quantity-container {
+      flex-direction: column;
+    }
+
+    .btn-submit {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+
+    header.custom-header {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .custom-logo, .custom-brand-logo {
+      width: 60px; /* Adjust logo size for tablets */
+    }
+  }
+
+  /* Mobile Phones */
+  @media (max-width: 480px) {
+    body {
+      height: auto;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .form-container {
+      width: 100%;
+      padding: 15px;
+      box-shadow: none;
+    }
+
+    .price-quantity-container input {
+      width: 100%;
+    }
+
+    .form-group label,
+    .form-group select,
+    .form-group input {
+      font-size: 14px;
+    }
+
+    .btn-submit {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    header.custom-header {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .custom-logo, .custom-brand-logo {
+      width: 50px; /* Adjust logo size for mobile */
+    }
+
+    .custom-right-container {
+      margin-top: 10px;
+    }
+
+    .custom-date-time {
+      font-size: 12px; /* Reduce font size for mobile */
+    }
+  }
     </style>
   </head>
   <body>
     <div class="desktop-sixteen">
       <div class="columnarrowleft">
-        <header class="custom-header">
-          <div class="custom-header-top">
-          
-              <img src="../images/download (1).png" alt="Litro Gas Logo" class="custom-logo">
-             
-              <img src="../images/1.png" alt="Uwais & Sons Logo" class="custom-brand-logo">
-              <img src="../images/mk.jpg" alt="Litro Gas Logo" class="custom-logo">
-              <div class="custom-right-container">
-                <a href="" id="Home-button" class="custom-login-btn">Home</a>
-                <div class="custom-date-time">
-                    <span id="currentDate"></span><br>
-                    <span id="currentTime"></span>
-                </div>
-            </div>
-
-          </div>
-          
-        </header>
-      <br><br><br><br><br><br>
       </div>    
       <div class="row_three">
         <div class="rowsmall container-xs">
@@ -150,6 +208,12 @@
               </div>
               <button type="submit" class="btn-submit">Add Product</button>
             </form>
+            <br>
+            <div class="custom-header-top">
+              <div class="custom-right-container">
+                <a href="" id="Home-button" class="custom-login-btn">Home</a>
+               </div>
+          </div>
           </div>
           </div>
         </div>

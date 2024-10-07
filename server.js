@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const mongoose = require('mongoose'); // Add mongoose
+const mongoose = require('mongoose');
 require('dotenv').config(); // Load environment variables from .env
 
 const app = express();
@@ -60,40 +60,6 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 
-// Route to add or update a product
-app.post('/api/products', async (req, res) => {
-    const { size, price, quantity } = req.body;
-
-    try {
-        // Find a product with the same size
-        const existingProduct = await Product.findOne({ size });
-
-        if (existingProduct) {
-            // Update the price if provided
-            if (price) {
-                existingProduct.price = price;
-            }
-
-            // Update the quantity if provided
-            if (quantity) {
-                existingProduct.quantity = quantity;
-            }
-
-            // Save the updated product
-            await existingProduct.save();
-            return res.status(200).json({ success: true, message: 'Product updated successfully!' });
-        } else {
-            // If no existing product, create a new one
-            const newProduct = new Product({ size, price, quantity });
-            await newProduct.save();
-            return res.status(200).json({ success: true, message: 'Product added successfully!' });
-        }
-    } catch (error) {
-        console.error('Error adding/updating product:', error);
-        return res.status(500).json({ success: false, message: 'Failed to add/update product.' });
-    }
-});
-
 // Order model
 const orderSchema = new mongoose.Schema({
     FirstName: {
@@ -143,12 +109,23 @@ app.post('/api/products', async (req, res) => {
     }
 });
 
+// Route to get all products
+app.get('/api/products', async (req, res) => {
+    try {
+        const products = await Product.find(); // Retrieve all products from the database
+        return res.status(200).json(products);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return res.status(500).json({ success: false, message: 'Failed to fetch products.' });
+    }
+});
+
 // Route to get user details by phone number
 app.get('/api/get-user/:phoneNumber', async (req, res) => {
     const { phoneNumber } = req.params;
 
     try {
-        const order = await Order.findOne({ PhoneNumber: phoneNumber }); // Assuming Order is your model
+        const order = await Order.findOne({ PhoneNumber: phoneNumber }); // Find order by PhoneNumber
         if (order) {
             res.json(order); // Send the user details back as JSON
         } else {
@@ -159,6 +136,7 @@ app.get('/api/get-user/:phoneNumber', async (req, res) => {
         res.status(500).json({ message: 'Error fetching user details.' });
     }
 });
+
 // Route to send message and save order
 app.post('/send-message', async (req, res) => {
     let { FirstName, PhoneNumber, Size, deliveryOption, deliveryMethod, finalAddress, addressOption } = req.body;
@@ -179,22 +157,18 @@ app.post('/send-message', async (req, res) => {
             // Send the message to Telegram without database operations
             await sendMessageToTelegram(message);
             return res.status(200).json({ success: true, message: 'Message sent successfully for Take Away!' });
-        } 
+        }
 
         // If the delivery option is Door to Door
         // Use the deliveryMethod from the request body directly without defaulting
         message += `Size: ${Size}\nDelivery Option: Door to Door\nDelivery Method: ${deliveryMethod}\nAddress Type: ${addressOption}\nAddress: ${finalAddress}\n`;
-
-        // Your Telegram bot token and chat ID
-        const botToken = process.env.BOT_TOKEN; // Store your bot token in .env
-        const chatId = process.env.CHAT_ID; // Store your chat ID in .env
 
         // Inline keyboard markup for Accept and Decline buttons
         const inlineKeyboard = {
             reply_markup: {
                 inline_keyboard: [
                     [
-                        { text: "Accept", callback_data: "accept" },
+                        { text: "Accept", callback_data: `accept_${Size}` },
                         { text: "Decline", callback_data: "decline" }
                     ]
                 ]
@@ -206,7 +180,7 @@ app.post('/send-message', async (req, res) => {
 
         if (!existingOrder) {
             // Save the user details if not already saved
-            const order = new Order({ FirstName, PhoneNumber, finalAddress }); // Assuming finalAddress is part of the model
+            const order = new Order({ FirstName, PhoneNumber, finalAddress });
             await order.save(); // Save to the database
         } else {
             // If the user exists and the delivery option is Door to Door, update the address
@@ -224,6 +198,39 @@ app.post('/send-message', async (req, res) => {
     }
 });
 
+// Route to handle Telegram callback queries
+app.post('/telegram-callback', async (req, res) => {
+    const callbackQuery = req.body;
+
+    // Check if the callback data is "accept"
+    if (callbackQuery?.callback_query?.data.startsWith('accept')) {
+        const chatId = callbackQuery.callback_query.from.id;
+        const size = callbackQuery.callback_query.data.split('_')[1]; // Extract size from callback data
+
+        try {
+            // Find the product by size and decrement the quantity by 1
+            const product = await Product.findOne({ size });
+            if (product) {
+                product.quantity = Math.max(0, product.quantity - 1); // Decrease by 1, ensuring quantity doesn't go below 0
+                await product.save();
+
+                // Send a confirmation message to the user
+                await sendMessageToTelegram(`Thank you! The order for size ${size} has been accepted. Remaining quantity: ${product.quantity}`, { chat_id: chatId });
+                res.status(200).json({ success: true, message: 'Product quantity updated and message sent.' });
+            } else {
+                // Send a message if the product wasn't found
+                await sendMessageToTelegram(`Sorry, the product of size ${size} was not found.`, { chat_id: chatId });
+                res.status(404).json({ success: false, message: 'Product not found.' });
+            }
+        } catch (error) {
+            console.error('Error handling Telegram callback:', error);
+            res.status(500).json({ success: false, message: 'Error processing callback.' });
+        }
+    } else {
+        res.status(400).json({ success: false, message: 'Invalid callback data.' });
+    }
+});
+
 // Function to send message to Telegram
 const sendMessageToTelegram = async (message, inlineKeyboard = {}) => {
     const url = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`;
@@ -233,12 +240,6 @@ const sendMessageToTelegram = async (message, inlineKeyboard = {}) => {
         ...inlineKeyboard // Spread the inline keyboard object into the request body
     });
 };
-
-
-
-
-
-
 
 // Start the server
 app.listen(PORT, () => {

@@ -14,7 +14,7 @@
   max-width: 1400px;
   margin: 0 auto;
   border-radius: 10px; /* Added border-radius */
-  position: fixed;
+  position:static;
   z-index: 1000;
   
 }
@@ -87,10 +87,6 @@
 .invisible {
   visibility: hidden;
 }
-
-
-
-
 
 /*flip*/
   .center-text-container {

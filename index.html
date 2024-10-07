@@ -40,12 +40,12 @@
               <li><a href="#">Home</a></li>
               <li><a href="#">About us</a></li>
               <li><a href="#">Shop</a></li>
-              <li><a href="#">Contact</a></li>
               <li><a href="#">Items</a></li>
+              <li><a href="#">Contact</a></li>
             </ul>
           </nav>
         </header>
-        <br><br><br><br><br><br><br><br><br><br><br>
+       
         <!--Home -->
         <div class="row_two">
           <div class="rowarrowleft">
@@ -83,154 +83,82 @@
       <!--Shop -->
       <div class="row_three">
         <div class="rowsmall container-xs">
-          <div class="cardrotate">
-            <div class="card-inner">
-              <div class="card-front">
-                <h2 class="card-title">Small</h2>
-                <img src="images/SMALL.jpeg" alt="Card Image" class="card-image">
-              </div>
-              <div class="card-back">
-                <h2 class="card-title">SMALL</h2><br><br>
-                <div class="center-text-container">
-                  <p class="center.text">SIZE: <!-- Database--><br><br>PRIZE:  <!-- Database--><br><br>STOCK: <!-- Database--></p>
-                </div>
-                <br>
-                <button class="btn-order" id="order-now-new-btn" style="margin-top: 20px; background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer;">
-                  Order
-                </button>
-              </div>
-            </div>
+
+          
           </div>
-          <div class="cardrotate">
-            <div class="card-inner">
-              <div class="card-front">
-                <h2 class="card-title">MEDIUM</h2>
-                <img src="images/MEDIUM.jpeg" alt="Card Image" class="card-image">
-              </div>
-              <div class="card-back">
-                <h2 class="card-title">MEDIUM</h2><br><br>
-                <div class="center-text-container">
-                  <p class="center.text">SIZE:  <!-- Database--><br><br>PRIZE:  <!-- Database--><br><br>STOCK:  <!-- Database--></p>
-                </div>
-                <br>
-                <button class="btn-order" id="order-now-new-btn" style="margin-top: 20px; background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer;">
-                  Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="cardrotate">
-            <div class="card-inner">
-              <div class="card-front">
-                <h2 class="card-title">LARGE</h2>
-                <img src="images/BIG.jpeg" alt="Card Image" class="card-image">
-              </div>
-              <div class="card-back">
-                <h2 class="card-title">LARGE</h2><br><br>
-                <div class="center-text-container">
-                  <p class="center.text">SIZE: <!-- Database--><br><br>PRIZE:  <!-- Database--><br><br>STOCK: <!-- Database--></p>
-                </div>
-                <br>
-                <button class="btn-order" id="order-now-new-btn" style="margin-top: 20px; background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer;">
-                  Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="cardrotate">
-            <div class="card-inner">
-              <div class="card-front">
-                <h2 class="card -title">EX-LARGE</h2>
-                <img src="images/WhatsApp Image 2024-09-21 at 22.35.07_9166b00b.jpg" alt="Card Image" class="card-image">
-              </div>
-              <div class="card-back">
-                <h2 class="card-title">EX-LARGE</h2><br><br>
-                <div class="center-text-container">
-                  <p class="center.text">SIZE:  <!-- Database--><br><br>PRIZE: <!-- Database--><br><br>STOCK: <!--  Database--></p>
-                </div>
-                <br>
-                <button class="btn-order" id="order-now-new-btn" style="margin-top: 20px; background-color: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer;">
-                  Order
-                </button>
-              </div>
-            </div>
-          </div>
+      </div>
 <!--new -->
-          <div class="overlay" id="new-overlay" style="display: none;">
-            <div class="new-overlay-content">
-              <img src="images/1.png" alt="Uwais & Sons Logo" class="custom-brand-logo">
-                <h2>Details Where to Place the Order</h2>
-                <p id="size-display"><!--{SIZE}--></p>
-                <form id="orderForm" class="form-box-unique" method="POST">
-                    <div class="responsive-container-block">
-                        <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
-                            <input class="input-3d" name="FirstName" id="FirstName" placeholder="First Name" required>
-                        </div>
-                        <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
-                            <input class="input-3d" name="PhoneNumber" id="PhoneNumber" placeholder="Phone Number" required>
-                        </div>
+      <div class="overlay" id="new-overlay" style="display: none;">
+        <div class="new-overlay-content">
+          <img src="images/1.png" alt="Uwais & Sons Logo" class="custom-brand-logo">
+            <h2>Details Where to Place the Order</h2>
+            <p id="size-display"><!--{SIZE}--></p>
+            <form id="orderForm" class="form-box-unique" method="POST">
+                <div class="responsive-container-block">
+                    <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
+                        <input class="input-3d" name="FirstName" id="FirstName" placeholder="First Name" required>
                     </div>
+                    <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                        <input class="input-3d" name="PhoneNumber" id="PhoneNumber" placeholder="Phone Number" required>
+                    </div>
+                </div>
+                    <div class="radio-inputs">
+                        <label class="radio">
+                            <input type="radio" name="deliveryOption" value="takeAway" disabled>
+                            <span class="name">Take Away</span>
+                        </label>
+                        <br>
+                        <label class="radio">
+                            <input type="radio" name="deliveryOption" value="doorToDoor" checked >
+                            <span class="name">Door to Door Delivery</span>
+                        </label>
+                    </div> <br>
+                    <div id="deliveryMethodContainer">
                         <div class="radio-inputs">
                             <label class="radio">
-                                <input type="radio" name="deliveryOption" value="takeAway" disabled>
-                                <span class="name">Take Away</span>
+                                <input type="radio" name="deliveryMethod" value="byPerson" checked>
+                                <span class="name">Person</span>
                             </label>
-                            <br>
                             <label class="radio">
-                                <input type="radio" name="deliveryOption" value="doorToDoor" checked >
-                                <span class="name">Door to Door Delivery</span>
+                                <input type="radio" name="deliveryMethod" value="byVehicle">
+                                <span class="name">Vehicle</span>
                             </label>
-                        </div> <br>
-                        <div id="deliveryMethodContainer">
-                            <div class="radio-inputs">
-                                <label class="radio">
-                                    <input type="radio" name="deliveryMethod" value="byPerson" checked>
-                                    <span class="name">Person</span>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="deliveryMethod" value="byVehicle">
-                                    <span class="name">Vehicle</span>
-                                </label>
-                            </div>
-                            <br>
-                            <div class="radio-inputs">
-                                <label class="radio">
-                                    <input type="radio" name="addressOption" value="typeAddress" checked>
-                                    <span class="name">Type Address</span>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="addressOption" value="selectLocation">
-                                    <span class="name">Select Location</span>
-                                </label>
-                            </div>
-                            <br>
-                            <div id="addressInputContainer">
-                              <input class="input-3d" name="Address" id="Address" placeholder="Type your address here">
-                          </div>
-                          <br>
-                          <div id="locationInputContainer" style="display: none;">
-                              <button type="button" id="getLocation">Use My Location</button>
-                              <input class="input-3d" name="Location" id="Location" placeholder="Your Location" readonly>
-                          </div>
                         </div>
-                        <div>
-                          <p>Already a user? <a href="#" id="searchUserLink">Search by Phone Number</a></p>
+                        <br>
+                        <div class="radio-inputs">
+                            <label class="radio">
+                                <input type="radio" name="addressOption" value="typeAddress" checked>
+                                <span class="name">Type Address</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="addressOption" value="selectLocation">
+                                <span class="name">Select Location</span>
+                            </label>
+                        </div>
+                        <br>
+                        <div id="addressInputContainer">
+                          <input class="input-3d" name="Address" id="Address" placeholder="Type your address here">
                       </div>
-                        <div class="buttons-container">
-                          <button type="button" class="btn-cancel" id="close-new-overlay">Cancel</button>
-                          <button type="submit" class="btn-order" id="order-now-btn">Order</button>
+                      <br>
+                      <div id="locationInputContainer" style="display: none;">
+                          <button type="button" id="getLocation">Use My Location</button>
+                          <input class="input-3d" name="Location" id="Location" placeholder="Your Location" readonly>
                       </div>
                     </div>
-                </form>
-                <div id="searchContainer" style="display: none;">
-                    <input class="input-3d" id="searchPhoneNumber" placeholder="Enter your Phone Number">
-                    <button type="button" class="btn-order" id="searchUserBtn">Search</button>
-                    <div id="searchMessage" style="margin-top: 10px; color: red;"></div>
+                    <div>
+                      <p>Already a user? <a href="#" id="searchUserLink">Search by Phone Number</a></p>
+                  </div>
+                    <div class="buttons-container">
+                      <button type="button" class="btn-cancel" id="close-new-overlay">Cancel</button>
+                      <button type="submit" class="btn-order" id="order-now-btn">Order</button>
+                  </div>
                 </div>
+            </form>
+            <div id="searchContainer" style="display: none;">
+                <input class="input-3d" id="searchPhoneNumber" placeholder="Enter your Phone Number">
+                <button type="button" class="btn-order" id="searchUserBtn">Search</button>
+                <div id="searchMessage" style="margin-top: 10px; color: red;"></div>
             </div>
-          </div>
-          </div>
-          
         </div>
       </div>
 
@@ -296,7 +224,7 @@
               <div class="card-inner">
                 <div class="card-front"><br><br><br><br>
                   <h2 class="card-title">Burners</h2>
-                  <img src="images/download (4 ).jpeg" alt="Card Image" class="card-image">
+                  <img src="images/download (4).jpeg" alt="Card Image" class="card-image">
                 </div>
                 <div class="card-back">
                   <h2 class="card-title">Burners</h2><br><br>
@@ -382,20 +310,7 @@
                             <p class="text-blk section-head">
                               Contact us : 
                             </p>
-                            <div class="icons-container">
-                              <a class="share-icon">
-                                <img class="img" src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-twitter.png">
-                              </a>
-                              <a class="share-icon">
-                                <img class="img" src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-facebook.png">
-                              </a>
-                              <a class="share-icon">
-                                <img class="img" src="https://workik-widget-assets.s3.amazonaws.com /Footer1-83/v1/images/Icon-google.png">
-                              </a>
-                              <a class="share-icon">
-                                <img class="img" src="https://workik-widget-assets.s3.amazonaws.com/Footer1-83/v1/images/Icon-instagram.png">
-                              </a>
-                            </div>
+                            
                           </div>
                         </div>
                         <div class="responsive-cell-block wk-ipadp-6 wk-tab-12 wk-mobile-12 wk-desk-6 right-one" id="i1zj">
