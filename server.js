@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
 require('dotenv').config(); // Load environment variables from .env
 
 const app = express();
@@ -241,6 +242,37 @@ const sendMessageToTelegram = async (message, inlineKeyboard = {}) => {
     });
 };
 
+// Nodemailer transport setup
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL,      // Your email address
+      pass: process.env.EMAIL_PASS   // Your email password or app password
+    }
+  });
+  
+  // Endpoint to handle form submission
+  app.post('/submit-form', (req, res) => {
+    const { FirstName, PhoneNumber, message } = req.body;
+  
+    const mailOptions = {
+      from: process.env.EMAIL,        // "from" address is the sender's email
+      to: process.env.EMAIL2,         // "to" address is the recipient's email
+      subject: 'Form Submission',
+      text: `First Name: ${FirstName}\nPhone Number: ${PhoneNumber}\nMessage: ${message}`
+    };
+  
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+        return res.status(500).json({ message: 'Error sending email' });
+      }
+      console.log('Email sent:', info.response);
+      res.status(200).json({ message: 'Email sent successfully' });
+    });
+  });
+
+  
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

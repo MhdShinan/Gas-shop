@@ -314,25 +314,23 @@
                           </div>
                         </div>
                         <div class="responsive-cell-block wk-ipadp-6 wk-tab-12 wk-mobile-12 wk-desk-6 right-one" id="i1zj">
-                          <form class="form-box">
-                            <div class="container-block form-wrapper">
-                              <div class="responsive-container-block">
-                                <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
-                                  <input class="input" id="ijowk-7" name="FirstName" placeholder="First Name">
-                                </div>  
-                                <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
-                                  <input class="input" id="imgis-6" name="PhoneNumber" placeholder="Phone Number">
-                                </div>
-                                <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
-                                  <textarea aria-placeholder="Type message here" class="textinput" id="i5vyy-7" placeholder="Type message here"></textarea>
-                                </div>
+                          <form id="myForm" class="form-box">
+                              <div class="container-block form-wrapper">
+                                  <div class="responsive-container-block">
+                                      <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
+                                          <input class="input" id="ijowk-7" name="FirstName" placeholder="First Name" required>
+                                      </div>
+                                      <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                                          <input class="input" id="imgis-6" name="PhoneNumber" placeholder="Phone Number" required>
+                                      </div>
+                                      <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
+                                          <textarea aria-placeholder="Type message here" class="textinput" id="i5vyy-7" name="message" placeholder="Type message here" required></textarea>
+                                      </div>
+                                  </div>
+                                  <button type="submit" class="submit-btn">submit</button>
                               </div>
-                              <button class="submit-btn">
-                                submit
-                              </button>
-                            </div>
                           </form>
-                        </div>
+                      </div>                      
                       </div>
                     </div>
                   </div>
@@ -358,5 +356,7 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="js/script.js"></script>    
     <script src="js/order.js"></script>
+    <script src="js/contact.js"></script>
+
   </body>
 </html>
