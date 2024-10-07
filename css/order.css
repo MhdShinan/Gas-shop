@@ -1,9 +1,8 @@
-/* New Overlay Style */
 #new-overlay {
-    background-color: #1a1a1d; /* Dark background */
-    width: 400px;
+    background-color: #007bff; /* Dark background */
+    width: auto;
     height: auto;
-    border-radius: 15px;
+    border-radius: 10px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* 3D effect */
     position: fixed;
     top: 50%;
@@ -12,13 +11,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
   }
   
-  #map {
-    height: 300px;
-    width: 100%;
-    display: none; /* Initially hide the map */
-  }
+
   /* Form 3D input fields */
   .input-3d {
     width: 100%;
@@ -31,6 +27,7 @@
     background-color: #f5f5f5;
     color: #333;
     transition: all 0.3s ease-in-out;
+    font-size: 100%;
   }
   
   .input-3d:focus {
@@ -42,18 +39,19 @@
   /* Buttons styling */
   .buttons-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Ensure buttons are aligned side by side */
     align-items: center;
-  }
+    width: 100%; /* Make sure buttons take full width */
+}
   
-  .btn-cancel, .btn-order {
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 48%;
-    transition: transform 0.3s, background-color 0.3s;
-  }
+.btn-cancel, .btn-order {
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 48%;
+  transition: transform 0.3s, background-color 0.3s;
+}
   
   .btn-cancel {
     background-color: #e74c3c; /* Red for cancel */
@@ -83,7 +81,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    background-color: #007bff; /* Semi-transparent background */
     display: none; /* Hidden by default */
     justify-content: center;
     align-items: center;
@@ -120,7 +118,7 @@
   button.flex-row-center-center {
     cursor: pointer;
     padding: 10px;
-    background-color: blue;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -141,17 +139,22 @@
     border-radius: 5px;
   }
 
+  .radio-inputs {
+    display: flex;
 
+    width: 100%; /* Make the radio inputs container take full width */
+    flex-wrap: nowrap; /* Prevent wrapping for horizontal alignment */
+}
 .radio-inputs {
   position: relative;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   border-radius: 0.5rem;
   background-color: #EEE;
   box-sizing: border-box;
   box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
   padding: 0.25rem;
-  width: 300px;
+  width: 100%;
   font-size: 14px;
 }
 
@@ -179,4 +182,48 @@
 .radio-inputs .radio input:checked + .name {
   background-color: #fff;
   font-weight: 600;
+}
+/* Ensure the overlay scrolls */
+#new-overlay {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 80vh; /* Limit height so scrolling can occur if content overflows */
+}
+
+/* Custom Scrollbar for the #new-overlay */
+#new-overlay::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+#new-overlay::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+
+#new-overlay::-webkit-scrollbar-thumb {
+  background: white; 
+  border-radius: 5px;
+}
+
+#new-overlay::-webkit-scrollbar-thumb:hover {
+  background: white; 
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 2px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #007bff; 
+  border-radius: 2px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: #007bff; 
 }
