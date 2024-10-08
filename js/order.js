@@ -105,5 +105,37 @@ fetch('/api/products')
   .catch(error => console.error('Error fetching products:', error));
 
 
+  window.addEventListener("scroll", function() {
+    const button = document.getElementById("floating-button");
+    const scrollPosition = window.scrollY;
+    const fixedPosition = 200; // Set the position where you want it to stop (e.g., 200px from the top)
+
+    // Change the button's position based on the scroll
+    if (scrollPosition < fixedPosition) {
+        button.style.top = `${scrollPosition + 20}px`; // Adjust based on your desired top offset
+    } else {
+        button.style.top = `${fixedPosition}px`; // Stop at the fixed position
+    }
+});
+
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const tabMenu = document.getElementById("tab-menu");
+    const circleButton = document.getElementById("floating-button");
+
+    hamburgerMenu.addEventListener("click", function() {
+        // Toggle tabs and icon
+        tabMenu.style.display = (tabMenu.style.display === "flex") ? "none" : "flex";
+        hamburgerMenu.classList.toggle("close-icon"); // Toggle close icon
+    });
+
+    // Close tab menu and revert icon when a tab is clicked
+    const tabs = document.querySelectorAll(".tab");
+    tabs.forEach(tab => {
+        tab.addEventListener("click", function() {
+            tabMenu.style.display = "none"; // Hide tabs
+            hamburgerMenu.classList.remove("close-icon"); // Set back to hamburger icon
+        });
+    });
+
 
   

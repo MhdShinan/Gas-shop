@@ -1,5 +1,5 @@
 // Get references to the order buttons and the overlay elements
-const orderButtons = document.querySelectorAll('.btn-order');
+const orderButtons = document.querySelectorAll('.button');
 const overlay = document.getElementById('new-overlay');
 const overlayText = document.querySelector('.new-overlay-content p');
 const closeOverlayButton = document.getElementById('close-new-overlay');

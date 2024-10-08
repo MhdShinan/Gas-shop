@@ -1,0 +1,250 @@
+/* Mobile and tablets - Hide the header and navigation bar */
+@media (max-width: 768px) {
+    .custom-nav-bar {
+        display: none;
+    }
+    
+    .custom-logo{
+        height: 25%;
+        width: auto;
+
+    }
+    .custom-brand-logo {
+        width: auto;
+        max-width: auto;
+        height: auto;
+    }
+
+    .custom-header {
+        width: 100%;
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Fix screen to ensure elements fit properly */
+    .custom-header-top {
+        flex-direction: column;
+        align-items: left;
+        padding: 10px;
+    }
+
+    /* Remove the login button on mobile */
+
+    .custom-right-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 10px; /* Add some horizontal padding */
+    }
+
+    .custom-date-time {
+        text-align: center; /* Align time to the right */
+        font-size: 14px;
+        flex: 1; /* Allow it to take full width */
+    }
+
+    /* Ensure images fit within the screen */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .custom-logo {
+        margin-bottom: 10px;
+    }
+}
+
+/* Further media query adjustments for very small screens (mobile phones) */
+@media (max-width: 480px) {
+    .custom-header-top {
+        padding: 5px;
+    }
+
+    .custom-logo{
+        width: auto;
+        float: left;
+        height: 100px;
+    }
+    .custom-brand-logo {
+        max-width: 120px;
+    }
+
+    .custom-right-container {
+        padding: 5px;
+    }
+
+}
+
+
+/*shop*/
+/* Center the cards and apply rotation */
+
+/* For tablets (landscape and portrait) */
+@media only screen and (max-width: 1024px) {
+    .rowsmall {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  
+    .cardrotate {
+      width: 80%; /* Adjust the width for tablets */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px; /* Add perspective for 3D effect */
+    }
+  
+    .card-inner {
+      position: relative;
+      width: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s; /* Smooth transition for rotation */
+    }
+  
+    .card-front, .card-back {
+      position: absolute;
+      backface-visibility: hidden; /* Hides the back when front is showing */
+      width: 100%;
+    }
+  
+    .card-back {
+      transform: rotateY(180deg); /* Rotate the back face 180 degrees */
+    }
+  
+    .cardrotate.clicked .card-inner {
+      transform: rotateY(180deg); /* Rotate on click */
+    }
+  }
+  
+  /* For mobile devices */
+  @media only screen and (max-width: 768px) {
+    .rowsmall {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  
+    .cardrotate {
+      width: 100%; /* Adjust the width for mobile devices */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px; /* Perspective for 3D effect */
+    }
+  
+    .card-inner {
+      position: relative;
+      width: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease; /* Smooth rotation transition */
+    }
+  
+    .card-front, .card-back {
+      position: absolute;
+      backface-visibility: hidden;
+      width: 100%;
+    }
+  
+    .card-back {
+      transform: rotateY(180deg); /* Rotate back face 180 degrees */
+    }
+  
+    .cardrotate.clicked .card-inner {
+      transform: rotateY(180deg); /* Rotate the card when clicked */
+    }
+  }
+  
+  /*overlay*/
+  @media only screen and (max-width: 768px) {
+    .new-overlay-content {
+        width: 95%; /* Increased width for better appearance on mobile */
+        max-width: 600px; /* Optional: set a maximum width */
+        padding: 15px;
+        margin: 0 auto; /* Center the overlay */
+    }
+
+    .custom-brand-logo {
+        width: auto; /* Adjust logo size for smaller screens */
+        height: auto;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .buttons-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* For very small mobile devices */
+@media only screen and (max-width: 480px) {
+    .new-overlay-content {
+        width: 95%; /* Almost full width on very small screens */
+        max-width: 400px; /* Optional: set a maximum width */
+        padding: 10px;
+        margin: 0 auto; /* Center the overlay */
+    }
+
+    .custom-brand-logo {
+        width: auto; /* Further reduce logo size */
+        height: auto;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .buttons-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+
+/*hamburger*/
+
+@media (max-width: 768px) {
+    .circle-button {
+        width: 50px; /* Smaller size for mobile */
+        height: 50px; /* Smaller size for mobile */
+    }
+
+    .hamburger-icon {
+        width: 25px; /* Adjust hamburger icon size */
+        height: 15px; /* Adjust hamburger icon height */
+    }
+}
+
+@media (max-width: 480px) {
+    .circle-button {
+        width: 40px; /* Even smaller size for smaller devices */
+        height: 40px; /* Even smaller size for smaller devices */
+    }
+
+    .hamburger-icon {
+        width: 20px; /* Adjust hamburger icon size further */
+        height: 12px; /* Adjust hamburger icon height further */
+    }
+}
+
+/* Media Queries for tabs */
+@media (max-width: 768px) {
+    .tab-menu {
+        top: 80px; /* Adjust position for smaller screens */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .tab-menu {
+        top: 80px; /* Adjust position for smaller screens */
+    }
+  }

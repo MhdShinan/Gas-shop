@@ -110,6 +110,7 @@
     background-color: #007bff;
     text-align: center;
     border-radius: 10px;
+    resize: both;
     position: relative; /* Ensure content is above the ::before pseudo-element */
     z-index: 1001; /* Ensure content is above the semi-transparent background */
   }

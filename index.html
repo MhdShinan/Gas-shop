@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Web site created using create-react-app" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/swiper@11.0.6/swiper.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/index.css" />
     <link rel="stylesheet" type="text/css" href="./css/font.css" />
@@ -14,9 +15,12 @@
     <link rel="stylesheet" type="text/css" href="./css/DesktopSixteen.css" />
     <link rel="stylesheet" type="text/css" href="./css/Overlay.css" />
     <link rel="stylesheet" type="text/css" href="./css/order.css" />
+    <link rel="stylesheet" type="text/css" href="./css/mediaquery.css" />
+    <link rel="stylesheet" type="text/css" href="./css/dark.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    
   </head>
   <body>
     
@@ -26,28 +30,20 @@
           <div class="custom-header-top">
             <img src="images/download (1).png" alt="Litro Gas Logo" class="custom-logo">
             <img src="images/1.png" alt="Uwais & Sons Logo" class="custom-brand-logo">
-            <img src="images/mk.jpg" alt="Litro Gas Logo" class="custom-logo">
+            
             <div class="custom-right-container">
-              <a href="html/login.html" id="loginButton" class="custom-login-btn">Login</a>
               <div class="custom-date-time">
                 <span id="currentDate"></span><br>
                 <span id="currentTime"></span>
               </div>
             </div>
           </div>
-          <nav class="custom-nav-bar">
-            <ul class="custom-nav-links">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Shop</a></li>
-              <li><a href="#">Items</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </nav>
+          
         </header>
-       
+        
+
         <!--Home -->
-        <div class="row_two">
+        <div id="home" class="row_two">
           <div class="rowarrowleft">
             <div id="slider" class="slider swiper">
               <div class="swiper-wrapper">
@@ -59,8 +55,36 @@
           </div>
         </div>
       </div>
+      <div class="circle-button">
+        <div class="hamburger-icon" id="hamburger-menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+    <div class="tab-menu" id="tab-menu">
+      <div class="tab">
+          <a href="#home"><i class="fa fa-home"></i> Home</a>
+      </div>
+      <div class="tab">
+          <a href="#about"><i class="fa fa-info-circle"></i> About</a>
+      </div>
+      <div class="tab">
+          <a href="#shop"><i class="fa fa-shopping-cart"></i> Shop</a>
+      </div>
+      <div class="tab">
+          <a href="#items"><i class="fa fa-th-list"></i> Items</a>
+      </div>
+      <div class="tab">
+          <a href="#contact"><i class="fa fa-envelope"></i> Contact</a>
+      </div>
+      <div class="tab">
+        <a href="html/login.html" id="loginButton" class="custom-login-btn">Login</a>
+    </div>
+  </div>
+  
       <!--About-->
-      <div class="row">
+      <div id="about" class="row">
         <div class="column container-xs">
           <div class="columnwhychoose">
             <div class="rowwhychooseus">
@@ -81,7 +105,7 @@
         </div>
       </div>
       <!--Shop -->
-      <div class="row_three">
+      <div id="shop" class="row_three">
         <div class="rowsmall container-xs">
 
           
@@ -163,7 +187,7 @@
       </div>
 
       <!--Items-->
-      <div class="row_four">
+      <div id="items" class="row_four">
         <div class="rowregulators">
           <div class="listregulators">
             <div class="cardrotate">
@@ -277,7 +301,7 @@
           </div>
         </div>
       </div>
-      <div class="rowview">
+      <div id="contact" class="rowview">
         <div class="column_one container-sm">
           <div class="columnview">
             <div class="background">
@@ -340,6 +364,7 @@
           </div>
         </div>
       </div>
+
       <div class="row_six">
         <div class="row_five container-sm">
           <div class="rowfooter">
@@ -357,6 +382,7 @@
     <script src="js/script.js"></script>    
     <script src="js/order.js"></script>
     <script src="js/contact.js"></script>
+    <script src="js/dark.js"></script>
 
   </body>
 </html>

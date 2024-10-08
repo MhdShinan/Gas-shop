@@ -1,23 +1,100 @@
-/*=========== TABLE OF CONTENTS ===========
-1. Common CSS
-2. Page CSS
+html {
+  scroll-behavior: smooth;
+}
 
-==========================================*/
+.resize-icon {
+  position: absolute;
+  top: 10px; /* Adjust position as necessary */
+  right: 10px;
+  cursor: nwse-resize; /* This shows a resize cursor on hover */
+}
+
+.resize-icon span {
+  font-size: 20px; /* Adjust size of the icon */
+  color: #000; /* You can adjust the color */
+}
+
+
+.circle-button {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, #00aaff, #0038ff);
+  border-radius: 50%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: fixed; /* Start as fixed */
+  top: 20px; /* Initial position from the top */
+  left: 10px; /* Position from the left */
+  z-index: 9999; /* Overlay above all elements */
+}
+
+.circle-button:active {
+  transform: scale(0.95);
+}
+
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+}
+
+.hamburger-icon .line {
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+.tab-menu {
+  position: fixed; /* Fixed position below the button */
+  left: 10px; /* Align with the button */
+  top: 90px; /* Adjust to position below the button */
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  display: none; /* Hidden by default */
+  flex-direction: column; /* Stack items vertically */
+  z-index: 9998; /* Just below the button */
+}
+
+.tab {
+  padding: 10px; /* Space inside each tab */
+  display: flex; /* Flex to align icon and text */
+  align-items: center; /* Center vertically */
+  cursor: pointer; /* Pointer on hover */
+  transition: background 0.3s ease; /* Smooth background change */
+}
+
+.tab:hover {
+  background: rgba(0, 0, 0, 0.1); /* Change background on hover */
+}
+
+.tab i {
+  margin-right: 8px; /* Space between icon and text */
+}
+
 
 
 /* Common Overlay styles */
 
 .custom-header {
-  background-color: #1e00ff;
+  background-color: #0038ff;
   padding: 15px 30px;
   width: 85%; /* Increase width to match lower dark blue section */
-  max-width: 1400px;
+  max-width: 1085px;
   margin: 0 auto;
   border-radius: 10px; /* Added border-radius */
   position:static;
   z-index: 1000;
   
 }
+
 
 .custom-header-top {
   display: flex;
@@ -58,8 +135,11 @@
 }
 
 .custom-nav-bar {
-  margin-top: 15px;
-  background-color: #0057E7;
+  background-color: #0038ff;
+  padding: 15px 30px;
+  width: 85%;
+  border-radius: 10px;
+  max-width: 1085px;
   text-align: center;
 }
 
@@ -77,11 +157,32 @@
   color: white;
   text-decoration: none;
   font-size: 20px;
+  position: relative;
+  padding-bottom: 5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-nav-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.custom-nav-links a:hover::after {
+  width: 100%;
 }
 
 .custom-nav-links a:hover {
-  text-decoration: underline;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
+
 
 
 .invisible {
