@@ -64,50 +64,120 @@ document.getElementById('getLocation').addEventListener('click', async function(
   }
 });
 
+// Handle form submission for the order
 document.getElementById('orderForm').addEventListener('submit', async function(e) {
   e.preventDefault(); // Prevent default form submission
 
+  // Get values from the form
   const FirstName = document.getElementById('FirstName').value;
   const PhoneNumber = document.getElementById('PhoneNumber').value;
   const Address = document.getElementById('Address').value;
   const Location = document.getElementById('Location').value;
   const Size = document.getElementById('size-display').textContent;
-
+  const Email = document.getElementById('Email').value;
   // Determine which address option was selected
   const addressOption = document.querySelector('input[name="addressOption"]:checked').value;
   const finalAddress = addressOption === 'typeAddress' ? Address : Location;
 
   // Get the delivery option and delivery method
-  const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked').value; // Assuming you have radio buttons for delivery option
-  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value; // Assuming you have radio buttons for delivery method
+  const deliveryOption = document.querySelector('input[name="deliveryOption"]:checked').value;
+  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
 
+  document.getElementById('new-overlay').style.display = 'none'; // Hide the order form overlay
+
+  // Send request to generate and send OTP
   try {
-      const response = await fetch('/send-message', {
+      const otpResponse = await fetch('/senduser-otp', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ FirstName, PhoneNumber, Size, finalAddress, addressOption, deliveryOption, deliveryMethod })
+          body: JSON.stringify({ Email: document.getElementById('Email').value }) // Assume Email field is present in your form
       });
 
-      const result = await response.json();
+      const otpResult = await otpResponse.json();
 
-      if (response.ok && result.success) {
-          // Success Alert
-          Swal.fire({
-              icon: 'success',
-              title: 'Order Placed!',
-              text: 'Your order was placed successfully!',
-              confirmButtonText: 'OK'
-          }).then(() => {
-              document.getElementById('new-overlay').style.display = 'none'; // Hide overlay
+      if (otpResponse.ok && otpResult.success) {
+          // Show OTP input overlay
+          document.getElementById('new-overlay2').style.display = 'block';
+
+          // Handle OTP input
+          const otpInputs = document.querySelectorAll('.otp-input');
+          otpInputs.forEach((input, index) => {
+              input.addEventListener('input', function() {
+                  if (this.value.length === this.maxLength && index < otpInputs.length - 1) {
+                      otpInputs[index + 1].focus();
+                  }
+              });
+
+              // Auto-submit OTP when all boxes are filled
+              input.addEventListener('input', async function() {
+                const otp = Array.from(otpInputs).map(input => input.value).join('');
+                if (otp.length === otpInputs.length) {
+                    // Send OTP for verification, including the email
+                    const verifyResponse = await fetch('/verifyuser-otp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ otp, Email: document.getElementById('Email').value }) // Ensure Email is included
+                    });
+            
+                    const verifyResult = await verifyResponse.json();
+                      if (verifyResponse.ok && verifyResult.success) {
+                          // If OTP is correct, place the order
+                          const orderResponse = await fetch('/send-message', {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json'
+                              },
+                              body: JSON.stringify({ FirstName, PhoneNumber, Size, finalAddress, addressOption, deliveryOption, deliveryMethod, Email })
+                          });
+
+                          const orderResult = await orderResponse.json();
+
+                          if (orderResponse.ok && orderResult.success) {
+                              // Success Alert for Order
+                              Swal.fire({
+                                  icon: 'success',
+                                  title: 'Order Placed!',
+                                  text: 'Your order was placed successfully!',
+                                  confirmButtonText: 'OK'
+                              }).then(() => {
+                                  document.getElementById('new-overlay').style.display = 'none'; // Hide order overlay
+                                  document.getElementById('new-overlay2').style.display = 'none'; // Hide OTP overlay
+                              });
+                          } else {
+                              // Error Alert for Order
+                              Swal.fire({
+                                  icon: 'error',
+                                  title: 'Error!',
+                                  text: orderResult.message || 'Failed to place the order.',
+                                  confirmButtonText: 'Try Again'
+                              });
+                          }
+                      } else {
+                          // Error Alert for OTP
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error!',
+                              text: 'OTP does not match. Please ensure you enter the correct OTP sent to your email and try again.',
+                              confirmButtonText: 'Try Again'
+                          });
+
+                          // Clear OTP inputs
+                          otpInputs.forEach(input => input.value = '');
+                          otpInputs[0].focus(); // Focus the first input
+                      }
+                  }
+              });
           });
       } else {
-          // Error Alert
+          // Error Alert for OTP sending
           Swal.fire({
               icon: 'error',
               title: 'Error!',
-              text: result.message || 'Failed to place the order.',
+              text: otpResult.message || 'Failed to send OTP.',
               confirmButtonText: 'Try Again'
           });
       }
@@ -116,12 +186,11 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
       Swal.fire({
           icon: 'error',
           title: 'Error!',
-          text: 'Failed to place the order. Please try again later.',
+          text: 'Failed to send OTP. Please try again later.',
           confirmButtonText: 'Try Again'
       });
   }
 });
-
 // Close overlay functionality
 document.getElementById('close-new-overlay').addEventListener('click', function() {
   document.getElementById('new-overlay').style.display = 'none';
@@ -134,45 +203,32 @@ document.getElementById('searchUserLink').addEventListener('click', function (ev
     document.getElementById('searchPhoneNumber').focus(); // Focus on the input field
 });
 
-document.getElementById('searchUserBtn').addEventListener('click', async function () {
-    const phoneNumber = document.getElementById('searchPhoneNumber').value.trim();
+document.getElementById('searchUserLink').addEventListener('click', function() {
+  document.getElementById('searchContainer').style.display = 'block';
+});
 
-    // Clear previous messages
-    const searchMessage = document.getElementById('searchMessage');
-    searchMessage.textContent = '';
+document.getElementById('searchUserBtn').addEventListener('click', function() {
+  const email = document.getElementById('searchEmail').value;
 
-    if (phoneNumber === '') {
-        searchMessage.textContent = 'Please enter a phone number.';
-        return;
-    }
-
-    // Call an API to get user details by phone number
-    try {
-        const response = await fetch(`/api/get-user/${phoneNumber}`); // Adjust the URL as necessary
-        if (response.ok) {
-            const userDetails = await response.json();
-            if (userDetails) {
-                // Fill the form with user details
-                document.getElementById('FirstName').value = userDetails.FirstName;
-                document.getElementById('PhoneNumber').value = userDetails.PhoneNumber;
-                document.getElementById('Address').value = userDetails.finalAddress; // Assuming 'finalAddress' is the field in the response
-                searchMessage.textContent = 'User found!'; // Display user found message
-                searchMessage.style.color = 'green'; // Change message color to green
-                document.getElementById('FirstName').focus(); // Focus on First Name input
-            } else {
-                searchMessage.textContent = 'No matches found.';
-                searchMessage.style.color = 'red'; // Change message color to red
-                document.getElementById('searchPhoneNumber').focus(); // Focus back on the search input
-            }
-        } else {
-            searchMessage.textContent = 'Error fetching user details.';
-            searchMessage.style.color = 'red'; // Change message color to red
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        searchMessage.textContent = 'An error occurred while searching for the user.';
-        searchMessage.style.color = 'red'; // Change message color to red
-    }
+  // Perform the search request by email
+  fetch(`/api/users/search?email=${email}`)
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              // Auto-fill the form with user data
+              document.getElementById('FirstName').value = data.user.name;
+              document.getElementById('PhoneNumber').value = data.user.number;
+              document.getElementById('Email').value = data.user.email;
+              document.getElementById('Address').value = data.user.address;
+              document.getElementById('searchMessage').textContent = '';
+          } else {
+              document.getElementById('searchMessage').textContent = 'User not found.';
+          }
+      })
+      .catch(error => {
+          document.getElementById('searchMessage').textContent = 'Error searching user.';
+          console.error('Error:', error);
+      });
 });
 
 document.addEventListener("DOMContentLoaded", function() {

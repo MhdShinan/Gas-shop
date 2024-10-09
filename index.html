@@ -79,8 +79,12 @@
           <a href="#contact"><i class="fa fa-envelope"></i> Contact</a>
       </div>
       <div class="tab">
-        <a href="html/userlogin.html" id="loginButton" class="custom-login-btn">Login</a>
+        <a href="html/userlogin.html" id="loginButton" class="custom-login-btn">User -Login</a>
     </div>
+      <div class="tab">
+        <a href="html/login.html" id="loginButton" class="custom-login-btn">Login</a>
+    </div>
+
   </div>
   
       <!--About-->
@@ -112,76 +116,98 @@
           </div>
       </div>
 <!--new -->
-      <div class="overlay" id="new-overlay" style="display: none;">
+<div class="overlay" id="new-overlay" style="display: none;">
+  <div class="new-overlay-content">
+    <img src="images/1.png" alt="Uwais & Sons Logo" class="custom-brand-logo">
+      <h2>Details Where to Place the Order</h2>
+      <p id="size-display"><!--{SIZE}--></p>
+      <form id="orderForm" class="form-box-unique" method="POST">
+          <div class="responsive-container-block">
+              <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
+                  <input class="input-3d" name="FirstName" id="FirstName" placeholder="First Name" required>
+              </div>
+              <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                  <input class="input-3d" name="PhoneNumber" id="PhoneNumber" placeholder="Phone Number" required>
+              </div>
+              <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
+                <input class="input-3d" name="Email" id="Email" placeholder="Email" required>
+            </div>
+          </div>
+              <div class="radio-inputs">
+                  <label class="radio">
+                      <input type="radio" name="deliveryOption" value="takeAway" disabled>
+                      <span class="name">Take Away</span>
+                  </label>
+                  <br>
+                  <label class="radio">
+                      <input type="radio" name="deliveryOption" value="doorToDoor" checked >
+                      <span class="name">Door to Door Delivery</span>
+                  </label>
+              </div> <br>
+              <div id="deliveryMethodContainer">
+                  <div class="radio-inputs">
+                      <label class="radio">
+                          <input type="radio" name="deliveryMethod" value="byPerson" checked>
+                          <span class="name">Person</span>
+                      </label>
+                      <label class="radio">
+                          <input type="radio" name="deliveryMethod" value="byVehicle">
+                          <span class="name">Vehicle</span>
+                      </label>
+                  </div>
+                  <br>
+                  <div class="radio-inputs">
+                      <label class="radio">
+                          <input type="radio" name="addressOption" value="typeAddress" checked>
+                          <span class="name">Type Address</span>
+                      </label>
+                      <label class="radio">
+                          <input type="radio" name="addressOption" value="selectLocation">
+                          <span class="name">Select Location</span>
+                      </label>
+                  </div>
+                  <br>
+                  <div id="addressInputContainer">
+                    <input class="input-3d" name="Address" id="Address" placeholder="Type your address here">
+                </div>
+                <br>
+                <div id="locationInputContainer" style="display: none;">
+                    <button type="button" id="getLocation">Use My Location</button>
+                    <input class="input-3d" name="Location" id="Location" placeholder="Your Location" readonly>
+                </div>
+              </div>
+              <div>
+                <p>Already a user? <a href="#" id="searchUserLink">Search by Email Address</a></p>
+            </div>
+              <div class="buttons-container">
+                <button type="button" class="btn-cancel" id="close-new-overlay">Cancel</button>
+                <button type="submit" class="btn-order" id="order-now-btn">Order</button>
+            </div>
+          </div>
+      </form>
+      <div id="searchContainer" style="display: none;">
+        <input class="input-3d" id="searchEmail" placeholder="Enter your Email Address">
+        <button type="button" class="btn-order" id="searchUserBtn">Search</button>
+        <div id="searchMessage" style="margin-top: 10px; color: red;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- OTP Overlay -->
+      <div class="overlay" id="new-overlay2" style="display: none;">
         <div class="new-overlay-content">
           <img src="images/1.png" alt="Uwais & Sons Logo" class="custom-brand-logo">
-            <h2>Details Where to Place the Order</h2>
+            <h2>Enter The Otp Number</h2>
             <p id="size-display"><!--{SIZE}--></p>
-            <form id="orderForm" class="form-box-unique" method="POST">
-                <div class="responsive-container-block">
-                    <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12">
-                        <input class="input-3d" name="FirstName" id="FirstName" placeholder="First Name" required>
-                    </div>
-                    <div class="responsive-cell-block wk-desk-6 wk-ipadp-6 wk-tab-12 wk-mobile-12">
-                        <input class="input-3d" name="PhoneNumber" id="PhoneNumber" placeholder="Phone Number" required>
-                    </div>
-                </div>
-                    <div class="radio-inputs">
-                        <label class="radio">
-                            <input type="radio" name="deliveryOption" value="takeAway" disabled>
-                            <span class="name">Take Away</span>
-                        </label>
-                        <br>
-                        <label class="radio">
-                            <input type="radio" name="deliveryOption" value="doorToDoor" checked >
-                            <span class="name">Door to Door Delivery</span>
-                        </label>
-                    </div> <br>
-                    <div id="deliveryMethodContainer">
-                        <div class="radio-inputs">
-                            <label class="radio">
-                                <input type="radio" name="deliveryMethod" value="byPerson" checked>
-                                <span class="name">Person</span>
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="deliveryMethod" value="byVehicle">
-                                <span class="name">Vehicle</span>
-                            </label>
-                        </div>
-                        <br>
-                        <div class="radio-inputs">
-                            <label class="radio">
-                                <input type="radio" name="addressOption" value="typeAddress" checked>
-                                <span class="name">Type Address</span>
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="addressOption" value="selectLocation">
-                                <span class="name">Select Location</span>
-                            </label>
-                        </div>
-                        <br>
-                        <div id="addressInputContainer">
-                          <input class="input-3d" name="Address" id="Address" placeholder="Type your address here">
-                      </div>
-                      <br>
-                      <div id="locationInputContainer" style="display: none;">
-                          <button type="button" id="getLocation">Use My Location</button>
-                          <input class="input-3d" name="Location" id="Location" placeholder="Your Location" readonly>
-                      </div>
-                    </div>
-                    <div>
-                      <p>Already a user? <a href="#" id="searchUserLink">Search by Email Address</a></p>
-                  </div>
-                    <div class="buttons-container">
-                      <button type="button" class="btn-cancel" id="close-new-overlay">Cancel</button>
-                      <button type="submit" class="btn-order" id="order-now-btn">Order</button>
-                  </div>
-                </div>
-            </form>
-            <div id="searchContainer" style="display: none;">
-                <input class="input-3d" id="searchPhoneNumber" placeholder="Enter your Phone Number">
-                <button type="button" class="btn-order" id="searchUserBtn">Search</button>
-                <div id="searchMessage" style="margin-top: 10px; color: red;"></div>
+            <div id="otpSection" >
+              <div class="otp-container">
+                <input class="otp-input" type="text" maxlength="1" id="otp1" required>
+                <input class="otp-input" type="text" maxlength="1" id="otp2" required>
+                <input class="otp-input" type="text" maxlength="1" id="otp3" required>
+                <input class="otp-input" type="text" maxlength="1" id="otp4" required>
+                <input class="otp-input" type="text" maxlength="1" id="otp5" required>
+                <input class="otp-input" type="text" maxlength="1" id="otp6" required>
+              </div>
             </div>
         </div>
       </div>
@@ -383,6 +409,5 @@
     <script src="js/order.js"></script>
     <script src="js/contact.js"></script>
     <script src="js/dark.js"></script>
-
   </body>
 </html>

@@ -4,11 +4,12 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 require('dotenv').config(); // Load environment variables from .env
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+let otpStore = {};
 // Middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -61,24 +62,6 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema);
 
-// Order model
-const orderSchema = new mongoose.Schema({
-    FirstName: {
-        type: String,
-        required: true,
-    },
-    PhoneNumber: {
-        type: String,
-        required: true,
-    },
-    finalAddress: {
-        type: String,
-        required: true,
-    },
-});
-
-const Order = mongoose.model('Order', orderSchema);
-
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     number: { type: String, required: true },
@@ -110,6 +93,22 @@ const userSchema = new mongoose.Schema({
       res.status(500).send({ message: 'Error saving user data' });
     }
   });
+
+  app.get('/api/users/search', async (req, res) => {
+    const { email } = req.query;
+
+    try {
+        const user = await User.findOne({ email });
+        if (user) {
+            res.json({ success: true, user });
+        } else {
+            res.json({ success: false, message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error searching user:', error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
   
 // Route to add or update a product
 app.post('/api/products', async (req, res) => {
@@ -154,34 +153,42 @@ app.get('/api/products', async (req, res) => {
 });
 
 // Route to get user details by phone number
-app.get('/api/get-user/:phoneNumber', async (req, res) => {
-    const { phoneNumber } = req.params;
 
-    try {
-        const order = await Order.findOne({ PhoneNumber: phoneNumber }); // Find order by PhoneNumber
-        if (order) {
-            res.json(order); // Send the user details back as JSON
-        } else {
-            res.status(404).json(null); // User not found
-        }
-    } catch (error) {
-        console.error('Error fetching user:', error);
-        res.status(500).json({ message: 'Error fetching user details.' });
-    }
-});
 
 // Route to send message and save order
 app.post('/send-message', async (req, res) => {
-    let { FirstName, PhoneNumber, Size, deliveryOption, deliveryMethod, finalAddress, addressOption } = req.body;
+    let { FirstName, PhoneNumber, Size, deliveryOption, deliveryMethod, finalAddress, addressOption, Email } = req.body;
 
     // Set default values if undefined
     Size = Size || "N/A"; // Default to "N/A" if Size is undefined
     deliveryOption = deliveryOption || "doorToDoor"; // Default to "doorToDoor"
 
-    // Construct the message
-    let message = `Name: ${FirstName}\nPhone Number: ${PhoneNumber}\n`;
+    // Validate that required fields are present
+    if (!FirstName || !PhoneNumber || !Email) {
+        return res.status(400).json({ success: false, message: 'First Name, Phone Number, and Email are required.' });
+    }
 
-    try {
+    // Construct the message
+    let message = `Name: ${FirstName}\nPhone Number: ${PhoneNumber}\nEmail: ${Email}\n`;
+
+    try { 
+        const existingUser = await User.findOne({ number: PhoneNumber });
+
+        if (!existingUser) {
+            // If the number does not exist, create a new user
+            const newUser = new User({
+                name: FirstName,
+                number: PhoneNumber,
+                address: finalAddress, // Or any other address you want to store
+                email: Email // Make sure this is passed correctly
+            });
+
+            await newUser.save(); // Save the new user to the database
+            message += `New user added with Phone Number: ${PhoneNumber}\n`; // Update message
+        } else {
+            message += `User with Phone Number: ${PhoneNumber} already exists.\n`; // Update message for existing user
+        }      
+
         // Check the delivery option
         if (deliveryOption === "takeAway") {
             // For Take Away, just send the name, number, and delivery option without checking the database
@@ -193,7 +200,6 @@ app.post('/send-message', async (req, res) => {
         }
 
         // If the delivery option is Door to Door
-        // Use the deliveryMethod from the request body directly without defaulting
         message += `Size: ${Size}\nDelivery Option: Door to Door\nDelivery Method: ${deliveryMethod}\nAddress Type: ${addressOption}\nAddress: ${finalAddress}\n`;
 
         // Inline keyboard markup for Accept and Decline buttons
@@ -208,19 +214,6 @@ app.post('/send-message', async (req, res) => {
             }
         };
 
-        // Check if the user already exists in the database by PhoneNumber
-        const existingOrder = await Order.findOne({ PhoneNumber });
-
-        if (!existingOrder) {
-            // Save the user details if not already saved
-            const order = new Order({ FirstName, PhoneNumber, finalAddress });
-            await order.save(); // Save to the database
-        } else {
-            // If the user exists and the delivery option is Door to Door, update the address
-            existingOrder.finalAddress = finalAddress; // Update the address
-            await existingOrder.save(); // Save the updated details
-        }
-
         // Send the message to Telegram
         await sendMessageToTelegram(message, inlineKeyboard);
 
@@ -230,6 +223,7 @@ app.post('/send-message', async (req, res) => {
         res.status(500).json({ success: false, message: 'Error sending message or processing order.' });
     }
 });
+
 
 // Route to handle Telegram callback queries
 app.post('/telegram-callback', async (req, res) => {
@@ -336,6 +330,44 @@ app.post('/send-otp', async (req, res) => {
     });
 });
   
+// Endpoint to send OTP
+app.post('/senduser-otp', (req, res) => {
+    const { Email } = req.body;
+
+    const otp = crypto.randomInt(100000, 999999).toString();
+    
+    otpStore[Email] = otp;  // Store OTP for the given email
+
+    const mailOptions = {
+        from: 'Uwais&sons@gmail.com',
+        to: Email,
+        subject: 'Your OTP Code',
+        text: `Your OTP code is ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return res.status(500).json({ success: false, message: 'Failed to send OTP' });
+        }
+        res.json({ success: true, message: 'OTP sent successfully!' });
+    });
+});
+
+// Endpoint to verify OTP
+app.post('/verifyuser-otp', (req, res) => {
+    const { otp, Email } = req.body;  // Ensure Email is also being sent
+
+    // Check if the OTP matches for the given email
+    if (otpStore[Email] && otpStore[Email] === otp) {
+        delete otpStore[Email];  // Clear OTP after successful verification
+        return res.status(200).json({ success: true, message: 'OTP verified successfully!' });
+    } else {
+        return res.status(400).json({ success: false, message: 'Invalid OTP. Please try again.' });
+    }
+});
+
+
+
 
 
 // Start the server
