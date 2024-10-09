@@ -1,0 +1,113 @@
+/* Center the form on the page */
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Light background for contrast */
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #1a1a1a;
+    color: #fff;
+    border: 1px solid #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    color: #00bfff;
+}
+
+.message, 
+.signin {
+    font-size: 14.5px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+}
+
+.form label {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+/* 3D Bubble Input Field Style */
+.form label .input {
+    background-color: #333;
+    color: white;
+    width: 90%;
+    padding: 15px 10px 5px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.5);
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2), inset 0px 1px 2px rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 3D hover effect */
+.form label .input:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3), inset 0px 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.submit {
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    background-color: #00bfff;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background-color: #00bfff96;
+}
+
+/* 3D Bubble OTP input boxes */
+.otp-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.otp-input {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 20px;
+    border: 1px solid #00bfff;
+    border-radius: 15px;
+    background-color: #333;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2), inset 0px 1px 2px rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.otp-input:focus {
+    outline: none;
+    border: 2px solid #00bfff;
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3), inset 0px 2px 4px rgba(255, 255, 255, 0.2);
+}
+

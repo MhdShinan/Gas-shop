@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="../css/userlogin.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Swal library -->
+</head>
+<body>
+  <div class="container">
+    <form class="form">
+        <img src="../images/1.png" alt="Uwais & Sons Logo" class="custom-brand-logo" style="display: inline-block; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 10px; border-radius: 10px; border: 2px solid #ccc;">
+
+
+      <p class="title">Register</p>
+      <p class="message">Signup now and get full access to our app.</p>
+
+      <div class="flex">
+        <label>
+          <input class="input" type="text" placeholder="Name" required>
+        </label>
+      </div>  
+
+      
+      <label>
+        <input class="input"  placeholder="Your Number" required>
+      </label>
+
+
+      <label>
+        <input class="input" type="text" placeholder="Your Address" required>
+      </label>
+
+
+      <label>
+        <input class="input" type="email" id="email" placeholder="youremail@example.com" required>
+      </label> 
+
+
+      <button class="submit" type="button" id="confirmEmailBtn">Confirm E-Mail</button>
+
+      <!-- OTP Section -->
+      <div id="otpSection" style="display: none;">
+        <div class="otp-container">
+          <input class="otp-input" type="text" maxlength="1" id="otp1" required>
+          <input class="otp-input" type="text" maxlength="1" id="otp2" required>
+          <input class="otp-input" type="text" maxlength="1" id="otp3" required>
+          <input class="otp-input" type="text" maxlength="1" id="otp4" required>
+          <input class="otp-input" type="text" maxlength="1" id="otp5" required>
+          <input class="otp-input" type="text" maxlength="1" id="otp6" required>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script src="../js/userlogin.js"></script>
+</body>
+</html>

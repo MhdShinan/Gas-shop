@@ -79,6 +79,38 @@ const orderSchema = new mongoose.Schema({
 
 const Order = mongoose.model('Order', orderSchema);
 
+const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    number: { type: String, required: true },
+    address: { type: String, required: true },
+    email: { type: String, required: true }
+  });
+  
+  // Create a User model based on the schema
+  const User = mongoose.model('User', userSchema);
+  
+  // API endpoint to save the user data
+  app.post('/api/saveUser', async (req, res) => {
+    try {
+      const { name, number, address, email } = req.body;
+  
+      // Create a new user document
+      const newUser = new User({
+        name,
+        number,
+        address,
+        email
+      });
+  
+      // Save user to the database
+      await newUser.save();
+      res.status(201).send({ message: 'User data saved successfully!' });
+    } catch (error) {
+      console.error('Error saving user data:', error);
+      res.status(500).send({ message: 'Error saving user data' });
+    }
+  });
+  
 // Route to add or update a product
 app.post('/api/products', async (req, res) => {
     const { size, price, quantity } = req.body;
@@ -262,6 +294,7 @@ const transporter = nodemailer.createTransport({
       text: `First Name: ${FirstName}\nPhone Number: ${PhoneNumber}\nMessage: ${message}`
     };
   
+    
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error('Error sending email:', error);
@@ -270,9 +303,41 @@ const transporter = nodemailer.createTransport({
       console.log('Email sent:', info.response);
       res.status(200).json({ message: 'Email sent successfully' });
     });
-  });
+});
 
+app.post('/send-otp', async (req, res) => {
+    const { email, otp } = req.body;
+
+    // Create a transporter with your email service credentials
+    let transporter = nodemailer.createTransport({
+        service: 'gmail', // Use your email service
+        auth: {
+            user: 'm.mohamed.shinan@gmail.com',      // Corrected email address
+            pass: 'dkggwcvxopwmnzhm'                 // Ensure that this is your actual App Password
+        }
+    });
+
+    // Email options
+    let mailOptions = {
+        from: 'm.mohamed.shinan@gmail.com',          // Corrected email address
+        to: email,
+        subject: 'Your OTP Code',
+        text: `Your OTP is ${otp}`
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Error sending email');
+        }
+        console.log('Email sent: ' + info.response);
+        res.status(200).send('OTP sent successfully');
+    });
+});
   
+
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
