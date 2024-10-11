@@ -93,7 +93,39 @@ const userSchema = new mongoose.Schema({
       res.status(500).send({ message: 'Error saving user data' });
     }
   });
-
+  app.post('/api/checkUser', async (req, res) => {
+    try {
+      const { email, number } = req.body;
+  
+      // Check if a user with the same email or phone number exists
+      const userWithEmail = await User.findOne({ email });
+      const userWithNumber = await User.findOne({ number });
+  
+      if (userWithEmail && userWithNumber) {
+        if (userWithEmail._id.equals(userWithNumber._id)) {
+          // Same user found
+          return res.json({ exists: true, isSameUser: true });
+        } else {
+          // Email and phone number mismatch, consider it a duplicate
+          return res.json({
+            exists: true,
+            duplicateEmail: !!userWithEmail,
+            duplicateNumber: !!userWithNumber,
+          });
+        }
+      } else if (userWithEmail) {
+        return res.json({ exists: true, duplicateEmail: true });
+      } else if (userWithNumber) {
+        return res.json({ exists: true, duplicateNumber: true });
+      } else {
+        // No duplicates found
+        return res.json({ exists: false });
+      }
+    } catch (error) {
+      console.error('Error checking user:', error);
+      res.status(500).json({ message: 'Error checking user' });
+    }
+  });
   app.get('/api/users/search', async (req, res) => {
     const { email } = req.query;
 

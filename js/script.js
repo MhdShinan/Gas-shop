@@ -86,6 +86,22 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
   document.getElementById('new-overlay').style.display = 'none'; // Hide the order form overlay
 
   // Send request to generate and send OTP
+  Swal.fire({
+    title: 'One more step to make the order',
+    text: 'We will now send you an OTP to verify your order.',
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonText: 'Proceed',
+    cancelButtonText: 'Cancel'
+}).then((result) => {
+    if (result.isConfirmed) {
+        // Hide the current overlay
+        document.getElementById('new-overlay').style.display = 'none'; 
+
+        // Show OTP input overlay
+        document.getElementById('new-overlay2').style.display = 'block'; 
+    }
+});
   try {
       const otpResponse = await fetch('/senduser-otp', {
           method: 'POST',
@@ -220,16 +236,40 @@ document.getElementById('searchUserBtn').addEventListener('click', function() {
               document.getElementById('PhoneNumber').value = data.user.number;
               document.getElementById('Email').value = data.user.email;
               document.getElementById('Address').value = data.user.address;
+              
+              // Make all fields read-only
+              document.getElementById('FirstName').setAttribute('readonly', true);
+              document.getElementById('PhoneNumber').setAttribute('readonly', true);
+              document.getElementById('Email').setAttribute('readonly', true);
+              document.getElementById('Address').setAttribute('readonly', true);
+
               document.getElementById('searchMessage').textContent = '';
           } else {
               document.getElementById('searchMessage').textContent = 'User not found.';
+              resetForm();
           }
       })
       .catch(error => {
           document.getElementById('searchMessage').textContent = 'Error searching user.';
           console.error('Error:', error);
+          resetForm();
       });
 });
+
+function resetForm() {
+  // Clear form fields and make them editable again
+  document.getElementById('FirstName').value = '';
+  document.getElementById('PhoneNumber').value = '';
+  document.getElementById('Email').value = '';
+  document.getElementById('Address').value = '';
+  
+  // Make all fields editable again
+  document.getElementById('FirstName').removeAttribute('readonly');
+  document.getElementById('PhoneNumber').removeAttribute('readonly');
+  document.getElementById('Email').removeAttribute('readonly');
+  document.getElementById('Address').removeAttribute('readonly');
+}
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const deliveryOptionRadios = document.querySelectorAll('input[name="deliveryOption"]');

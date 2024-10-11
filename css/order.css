@@ -75,7 +75,7 @@
   }
   
   .btn-cancel:hover {
-    background-color: #c0392b;
+    background-color: red;
     transform: scale(1.05);
   }
   
@@ -86,9 +86,10 @@
   }
   
   .btn-order:hover {
-    background-color: #27ae60;
+    background-color: green;
     transform: scale(1.05);
   }
+  
   /* Overlay styling */
   .overlay {
     position: fixed; /* Make sure the overlay covers the entire screen */

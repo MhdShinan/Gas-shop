@@ -179,17 +179,18 @@
               <div>
                 <p>Already a user? <a href="#" id="searchUserLink">Search by Email Address</a></p>
             </div>
+            <div id="searchContainer" style="display: none;">
+              <input class="input-3d" id="searchEmail" placeholder="Enter your Email Address">
+              <button type="button" class="btn-order" id="searchUserBtn">Search</button>
+              <div id="searchMessage" style="margin-top: 10px; color: red;"></div>
+          </div>
+          <br>
               <div class="buttons-container">
                 <button type="button" class="btn-cancel" id="close-new-overlay">Cancel</button>
                 <button type="submit" class="btn-order" id="order-now-btn">Order</button>
             </div>
           </div>
       </form>
-      <div id="searchContainer" style="display: none;">
-        <input class="input-3d" id="searchEmail" placeholder="Enter your Email Address">
-        <button type="button" class="btn-order" id="searchUserBtn">Search</button>
-        <div id="searchMessage" style="margin-top: 10px; color: red;"></div>
-    </div>
   </div>
 </div>
 
@@ -198,7 +199,23 @@
         <div class="new-overlay-content">
           <img src="images/1.png" alt="Uwais & Sons Logo" class="custom-brand-logo">
             <h2>Enter The Otp Number</h2>
-            <p id="size-display"><!--{SIZE}--></p>
+            <div>
+              <div id="wifi-loader" style="display: none;">
+              <svg class="circle-outer" viewBox="0 0 86 86">
+                  <circle class="back" cx="43" cy="43" r="40"></circle>
+                  <circle class="front" cx="43" cy="43" r="40"></circle>
+                  <circle class="new" cx="43" cy="43" r="40"></circle>
+              </svg>
+              <svg class="circle-middle" viewBox="0 0 60 60">
+                  <circle class="back" cx="30" cy="30" r="27"></circle>
+                  <circle class="front" cx="30" cy="30" r="27"></circle>
+              </svg>
+              <svg class="circle-inner" viewBox="0 0 34 34">
+                  <circle class="back" cx="17" cy="17" r="14"></circle>
+                  <circle class="front" cx="17" cy="17" r="14"></circle>
+              </svg>
+              <div class="text" data-text="Order-Proccessing"></div>
+            </div>
             <div id="otpSection" >
               <div class="otp-container">
                 <input class="otp-input" type="text" maxlength="1" id="otp1" required>
@@ -209,6 +226,7 @@
                 <input class="otp-input" type="text" maxlength="1" id="otp6" required>
               </div>
             </div>
+          </div>
         </div>
       </div>
 
