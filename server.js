@@ -257,38 +257,85 @@ app.post('/send-message', async (req, res) => {
 });
 
 
-// Route to handle Telegram callback queries
+/// Route to handle Telegram callback queries
 app.post('/telegram-callback', async (req, res) => {
-    const callbackQuery = req.body;
+    const callbackQuery = req.body?.callback_query;
+    
+    // Log the incoming request body for debugging
+    console.log('Incoming request body:', req.body);
 
-    // Check if the callback data is "accept"
-    if (callbackQuery?.callback_query?.data.startsWith('accept')) {
-        const chatId = callbackQuery.callback_query.from.id;
-        const size = callbackQuery.callback_query.data.split('_')[1]; // Extract size from callback data
+    if (!callbackQuery) {
+        console.log("No callback_query found in the request.");
+        return res.status(400).json({ success: false, message: 'No callback query found.' });
+    }
 
-        try {
-            // Find the product by size and decrement the quantity by 1
+    const chatId = callbackQuery.from.id;
+    const callbackData = callbackQuery.data;
+
+    try {
+        // Check if the callback data starts with "accept_"
+        if (callbackData.startsWith('accept_')) {
+            const size = callbackData.split('_')[1]; // Extract size from callback data
+
+            // Find the product by size
             const product = await Product.findOne({ size });
             if (product) {
-                product.quantity = Math.max(0, product.quantity - 1); // Decrease by 1, ensuring quantity doesn't go below 0
+                // Decrease quantity by 1, ensuring it doesn't go below 0
+                product.quantity = Math.max(0, product.quantity - 1);
                 await product.save();
 
-                // Send a confirmation message to the user
-                await sendMessageToTelegram(`Thank you! The order for size ${size} has been accepted. Remaining quantity: ${product.quantity}`, { chat_id: chatId });
-                res.status(200).json({ success: true, message: 'Product quantity updated and message sent.' });
+                // Notify the user that the order was accepted
+                await sendMessageToTelegram(
+                    `Order accepted for size: ${size}. Remaining quantity: ${product.quantity}`,
+                    { chat_id: chatId }
+                );
+
+                // Answer the callback query to remove the "loading" spinner in Telegram
+                await axios.post(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/answerCallbackQuery`, {
+                    callback_query_id: callbackQuery.id,
+                    text: 'Order has been accepted!',
+                    show_alert: false
+                });
+
+                return res.status(200).json({ success: true, message: 'Order accepted and product updated.' });
             } else {
-                // Send a message if the product wasn't found
-                await sendMessageToTelegram(`Sorry, the product of size ${size} was not found.`, { chat_id: chatId });
-                res.status(404).json({ success: false, message: 'Product not found.' });
+                // If product is not found
+                await sendMessageToTelegram(
+                    `Sorry, the product with size ${size} was not found.`,
+                    { chat_id: chatId }
+                );
+
+                await axios.post(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/answerCallbackQuery`, {
+                    callback_query_id: callbackQuery.id,
+                    text: 'Product not found!',
+                    show_alert: true
+                });
+
+                return res.status(404).json({ success: false, message: 'Product not found.' });
             }
-        } catch (error) {
-            console.error('Error handling Telegram callback:', error);
-            res.status(500).json({ success: false, message: 'Error processing callback.' });
+        } else if (callbackData === 'decline') {
+            // Handle the decline action
+            await sendMessageToTelegram('The order was declined.', { chat_id: chatId });
+
+            // Answer the callback query
+            await axios.post(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/answerCallbackQuery`, {
+                callback_query_id: callbackQuery.id,
+                text: 'Order declined.',
+                show_alert: false
+            });
+
+            return res.status(200).json({ success: true, message: 'Order declined.' });
+        } else {
+            // Invalid callback data
+            return res.status(400).json({ success: false, message: 'Invalid callback data.' });
         }
-    } else {
-        res.status(400).json({ success: false, message: 'Invalid callback data.' });
+    } catch (error) {
+        console.error('Error handling Telegram callback:', error);
+        return res.status(500).json({ success: false, message: 'Error processing callback.' });
     }
 });
+
+
 
 // Function to send message to Telegram
 const sendMessageToTelegram = async (message, inlineKeyboard = {}) => {

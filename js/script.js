@@ -98,8 +98,10 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
         // Hide the current overlay
         document.getElementById('new-overlay').style.display = 'none'; 
 
+
         // Show OTP input overlay
         document.getElementById('new-overlay2').style.display = 'block'; 
+        document.getElementById('otpLoader').style.display = 'flex';
     }
 });
   try {
@@ -112,7 +114,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
       });
 
       const otpResult = await otpResponse.json();
-
+      document.getElementById('otpLoader').style.display = 'none';
       if (otpResponse.ok && otpResult.success) {
           // Show OTP input overlay
           document.getElementById('new-overlay2').style.display = 'block';
@@ -195,6 +197,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
               });
           });
       } else {
+        document.getElementById('otpLoader').style.display = 'none'; // Hide the loader
           // Error Alert for OTP sending
           Swal.fire({
               icon: 'error',
@@ -204,6 +207,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
           });
       }
   } catch (error) {
+     document.getElementById('otpLoader').style.display = 'none'; // Hide the loader
       // Network or other error
       Swal.fire({
           icon: 'error',
