@@ -125,11 +125,13 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
                       otpInputs[index + 1].focus();
                   }
               });
-
+              const otpInputs = document.querySelectorAll('.otp-input'); // Assuming these are your OTP input fields
+              const loader = document.getElementById('loader'); // Reference to the loader element              
               // Auto-submit OTP when all boxes are filled
               input.addEventListener('input', async function() {
                 const otp = Array.from(otpInputs).map(input => input.value).join('');
                 if (otp.length === otpInputs.length) {
+                  loader.style.display = 'block';
                     // Send OTP for verification, including the email
                     const verifyResponse = await fetch('/verifyuser-otp', {
                         method: 'POST',
@@ -140,6 +142,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
                     });
             
                     const verifyResult = await verifyResponse.json();
+
                       if (verifyResponse.ok && verifyResult.success) {
                           // If OTP is correct, place the order
                           const orderResponse = await fetch('/send-message', {
@@ -162,6 +165,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
                               }).then(() => {
                                   document.getElementById('new-overlay').style.display = 'none'; // Hide order overlay
                                   document.getElementById('new-overlay2').style.display = 'none'; // Hide OTP overlay
+                                  loader.style.display = 'none';
                               });
                           } else {
                               // Error Alert for Order
@@ -171,6 +175,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
                                   text: orderResult.message || 'Failed to place the order.',
                                   confirmButtonText: 'Try Again'
                               });
+                              loader.style.display = 'none';
                           }
                       } else {
                           // Error Alert for OTP
@@ -184,6 +189,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
                           // Clear OTP inputs
                           otpInputs.forEach(input => input.value = '');
                           otpInputs[0].focus(); // Focus the first input
+                          loader.style.display = 'none';
                       }
                   }
               });
@@ -202,7 +208,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
       Swal.fire({
           icon: 'error',
           title: 'Error!',
-          text: 'Failed to send OTP. Please try again later.',
+          text: 'Network busy ! Please Try Again.',
           confirmButtonText: 'Try Again'
       });
   }
@@ -211,6 +217,10 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
 document.getElementById('close-new-overlay').addEventListener('click', function() {
   document.getElementById('new-overlay').style.display = 'none';
 });
+
+
+
+
 
 
 document.getElementById('searchUserLink').addEventListener('click', function (event) {

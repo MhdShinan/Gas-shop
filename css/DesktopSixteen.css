@@ -2,6 +2,17 @@ html {
   scroll-behavior: smooth;
 }
 
+
+.customLink {
+  color:#0038ff;
+  text-decoration:none;
+}
+
+.customLink:hover {
+  color: rgb(92, 193, 92);
+}
+
+
 .resize-icon {
   position: absolute;
   top: 10px; /* Adjust position as necessary */
