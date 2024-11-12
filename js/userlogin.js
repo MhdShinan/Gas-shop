@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       try {
           // Check if the user exists in the database using phone number or email
-          const response = await fetch('http://localhost:3000/api/checkUser', {
+          const response = await fetch('http://localhost:5000/api/checkUser', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -125,7 +125,7 @@ async function saveUserToDatabase(name, number, address, email) {
               });
     if (result.isConfirmed) {
                  // Redirect to index.html
-                 window.location.href = "http://localhost:3000"; // Redirect to index.html
+                 window.location.href = "http://localhost:5000"; // Redirect to index.html
             }
       } else {
           throw new Error(data.message || 'Failed to save user');

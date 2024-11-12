@@ -15,7 +15,7 @@ document.getElementById("Home-button").addEventListener("click", function(event)
   }).then((result) => {
     if (result.isConfirmed) {
       // Redirect to the index.html page in the root folder
-      window.location.href = "http://localhost:3000";
+      window.location.href = "http://localhost:5000";
     }
   });
 });

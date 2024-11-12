@@ -1,34 +1,55 @@
 /* Overlay styles */
 .overlay12345 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-    display: none; /* Hidden by default */
-    align-items: center;
-    justify-content: center;
-    z-index: 9999; /* Ensure it’s on top of other content */
-  }
-  
-  .overlay-content12345 {
-    width: 40%;
-    height: 50%;
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    position: relative;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  .close-btn12345 {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 24px; /* Adjust size as needed */
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Ensure it’s on top of other content */
+}
+
+.overlay-content12345 {
+  width: 40%;
+  height: 50%; /* Set a height to allow scrolling */
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Close button style */
+.close-btn12345 {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px; /* Adjust size as needed */
+  color: red;
+}
+
+/* Scrollbar styles for the overlay content */
+.overlay-content12345::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+.overlay-content12345::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+
+.overlay-content12345::-webkit-scrollbar-thumb {
+  background: #007bff; /* Color of the scrollbar */
+  border-radius: 5px;
+}
+
+.overlay-content12345::-webkit-scrollbar-thumb:hover {
+  background: #0056b3; /* Darker color on hover */
+}

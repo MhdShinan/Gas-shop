@@ -7,8 +7,9 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 require('dotenv').config(); // Load environment variables from .env
 
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 let otpStore = {};
 // Middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -451,5 +452,5 @@ app.post('/verifyuser-otp', (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on ${PORT}`);
 });

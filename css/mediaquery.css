@@ -70,7 +70,8 @@
         height: 100px;
     }
     .custom-brand-logo {
-        max-width: 120px;
+        width: auto;
+        height: auto;
     }
 
     .custom-right-container {
@@ -234,6 +235,7 @@
         width: 20px; /* Adjust hamburger icon size further */
         height: 12px; /* Adjust hamburger icon height further */
     }
+
 }
 
 /* Media Queries for tabs */
@@ -248,3 +250,47 @@
         top: 80px; /* Adjust position for smaller screens */
     }
   }
+
+  /*notification*/
+ /* Media Queries */
+@media (max-width: 480px) {
+    .overlay-content12345 {
+        width: 90%; /* Width adjustment for mobile */
+        height: auto; /* Adjust height */
+        max-height: 70vh; /* Set max height */
+    }
+
+    button {
+        font-size: 12px; /* Slightly smaller font for buttons */
+        padding: 12px 0; /* Increase button height */
+    }
+}
+
+/* Tablets (481px to 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .overlay-content12345 {
+        width: 80%; /* Width adjustment for tablets */
+        max-height: 70vh; /* Set max height */
+    }
+
+    button {
+        font-size: 14px; /* Font size for buttons */
+        padding: 10px 0; /* Uniform height */
+    }
+}
+
+/* Larger Tablets and Small Desktops (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .overlay-content12345 {
+        width: 70%; /* Adjust width for larger tablets */
+        max-height: 70vh; /* Set max height */
+    }
+}
+
+/* Desktops (1025px and up) */
+@media (min-width: 1025px) {
+    .overlay-content12345 {
+        width: 60%; /* More narrow for larger screens */
+        max-height: 80vh; /* Adjust max height for desktops */
+    }
+}

@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="./css/mediaquery.css" />
     <link rel="stylesheet" type="text/css" href="./css/notioverlay.css" />
     <link rel="stylesheet" type="text/css" href="./css/loading.css" />
+    <link rel="stylesheet" type="text/css" href="./css/notification.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -53,6 +54,7 @@
                 <div class="new-point"></div>
               </div>
             </div>
+            
             <div id="overlay12345" class="overlay12345">
               <div class="overlay-content12345">
                 <button class="close-btn12345">
@@ -60,7 +62,71 @@
                 </button>
                 <h2>Overlay Content</h2>
                 <div class="tab">
-                 
+                  <div class="request-card">
+                    <img src="images/small.jpeg" alt="Small Cylinder">
+                    <div class="request-info">
+                        <h3>Name</h3>
+                        <div class="status-buttons">
+                            <button class="pending">Request Pending</button>
+                            <br>
+                            <br>
+                            <button class="approved">Request Approved</button>
+                            <br>
+                            <br>
+                            <button class="declined">Request Declined</button>
+                        </div>
+                        <div class="status-messages">
+                            <p class="pending-msg">Your request is still pending. Wait until Admin Contact...</p>
+                            <p class="approved-msg">Your request has been accepted...</p>
+                            <p class="declined-msg">Your request has been declined...</p>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+                  <div class="tab">
+                    <div class="request-card">
+                      <img src="images/MEDIUM.jpeg" alt="Medium Cylinder">
+                      <div class="request-info">
+                          <h3>Name</h3>
+                          <div class="status-buttons">
+                              <button class="pending">Request Pending</button>
+                              <br>
+                              <br>
+                              <button class="approved">Request Approved</button>
+                              <br>
+                              <br>
+                              <button class="declined">Request Declined</button>
+                          </div>
+                          <div class="status-messages">
+                              <p class="pending-msg">Your request is still pending. Wait until Admin Contact...</p>
+                              <p class="approved-msg">Your request has been accepted...</p>
+                              <p class="declined-msg">Your request has been declined...</p>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="tab">
+                  <div class="request-card">
+                      <img src="images/BIG.jpeg" alt="Large Cylinder">
+                      <div class="request-info">
+                          <h3>Name</h3>
+                          <div class="status-buttons">
+                              <button class="pending">Request Pending</button>
+                              <br>
+                              <br>
+                              <button class="approved">Request Approved</button>
+                              <br>
+                              <br>
+                              <button class="declined">Request Declined</button>
+                          </div>
+                          <div class="status-messages">
+                              <p class="pending-msg">Your request is still pending. Wait until Admin Contact...</p>
+                              <p class="approved-msg">Your request has been accepted...</p>
+                              <p class="declined-msg">Your request has been declined...</p>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
               </div>
               </div>
             </div>
@@ -76,7 +142,7 @@
           
         </header>
         
-
+<br>
         <!--Home -->
         <div id="home" class="row_two">
           <div class="rowarrowleft">
@@ -98,6 +164,30 @@
         </div>
     </div>
     <div class="tab-menu" id="tab-menu">
+      <div class="tab">
+        <div>
+          <div class="new-loader"  id="openOverlayButton">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              height="24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              class="new-svg-icon"
+            >
+              <path
+                d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175 0 .593 0 1.292-.538 1.292H5.538C5 18 5 17.301 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke="currentColor"
+              ></path>
+            </svg>
+            <div class="new-point"></div>
+          </div>
+        </div>
+    </div>
       <div class="tab">
           <a href="#home"><i class="fa fa-home"></i> Home</a>
       </div>
@@ -583,5 +673,7 @@
     <script src="js/order.js"></script>
     <script src="js/contact.js"></script>
     <script src="js/overlay.js"></script>
+    <script src="js/notification.js"></script>
+    <script src="config.js"></script>
   </body>
 </html>
